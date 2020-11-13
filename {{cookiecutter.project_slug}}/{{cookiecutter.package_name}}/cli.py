@@ -18,6 +18,8 @@ app = Typer()
 
 
 @app.command()
-def ping():
+@_coro
+async def ping():
+    await asyncio.sleep(1)
     typer.echo("PONG")
 

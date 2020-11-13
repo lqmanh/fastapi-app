@@ -8,7 +8,6 @@ from tortoise.models import Model
 from {{cookiecutter.package_name}}.common.types import CrudMethod
 
 
-
 def init_models(modules: Iterable[str]):
     Tortoise.init_models(list(modules), "default")
 

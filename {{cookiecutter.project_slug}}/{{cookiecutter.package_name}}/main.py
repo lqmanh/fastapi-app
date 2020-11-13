@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
 from {{cookiecutter.package_name}}.config import PYTHON_ENV, ROOT_PATH, TORTOISE_ORM_CONFIG
+from {{cookiecutter.package_name}}.modules.users import users_controller
 
 
 with open(path.join(path.dirname(path.abspath(__file__)), "../pyproject.toml")) as f:
@@ -44,6 +45,7 @@ app.add_middleware(
 #
 # register all routers here
 #
+app.include_router(users_controller.router, prefix="/v1/users")
 
 
 #

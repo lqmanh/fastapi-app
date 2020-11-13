@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import validator
 
 from {{cookiecutter.package_name}}.common.types import CrudMethod
 from {{cookiecutter.package_name}}.common.utils import create_pydantic_model
@@ -19,5 +19,6 @@ class UserCreate(create_pydantic_model(User, crud_method=CrudMethod.Create)):
         if not 8 <= len(password) <= 32:
             raise ValueError("must be at least 8 and no more than 32 characters long")
         return password
+
 
 UserRead = create_pydantic_model(User, crud_method=CrudMethod.Read)

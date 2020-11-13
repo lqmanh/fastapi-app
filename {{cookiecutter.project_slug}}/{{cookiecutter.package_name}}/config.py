@@ -15,7 +15,10 @@ TORTOISE_ORM_CONFIG = {
     },
     "apps": {
         "default": {
-            "models": ("aerich.models",)
+            "models": (
+                "{{cookiecutter.package_name}}.modules.users.users_models",
+                "aerich.models",
+           )
         }
     },
 }
