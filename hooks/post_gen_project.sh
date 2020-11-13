@@ -1,30 +1,34 @@
 #!/usr/bin/env bash
 
-poetry add \
 # Install FastAPI with Uvicorn dependencies
+poetry add \
     uvicorn \
     fastapi \
     fastapi-utils \
     python-multipart \
     python-jose[cryptography] \
-    passlib[bcrypt] \
+    passlib[bcrypt]
+
 # Install Tortoise ORM dependencies
+poetry add \
     tortoise-orm \
-    asyncpg \
+    asyncpg
+
 # Install Typer dependencies
-    typer \
+poetry add \
+    typer
+
 # Install other dependencies
+poetry add \
     python-dotenv \
-    tomlkit \
+    tomlkit
     
+# Install dev dependencies
 poetry add --dev \
     pytest \
     pylint \
     pyflakes \
     black
-
-
-mkdir migrations && poetry run aerich init-db
 
 
 git init && git add . && git commit -m 'Initial commit'
