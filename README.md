@@ -4,7 +4,7 @@ FastAPI app template
 
 ## Tech Stack
 
-- Python ^3.7
+- Python
 - FastAPI + Uvicorn
 - Tortoise ORM + PostgreSQL
 - Typer
