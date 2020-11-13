@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "{{cookiecutter.project_slug}}"
+description = "{{cookiecutter.description}}"
+version = "{{cookiecutter.version}}"
+authors = ["{{cookiecutter.author_name}} <{{cookiecutter.author_email}}>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+{{cookiecutter.cli}} = "{{cookiecutter.package_name}}.cli:app"
+
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
