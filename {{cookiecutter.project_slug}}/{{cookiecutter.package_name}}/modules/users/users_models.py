@@ -10,3 +10,8 @@ class User(BaseModel):
 
     class Meta:
         table = "users"
+
+    class PydanticMeta:
+        # always exclude password_hash
+        exclude = ("password_hash",)
+
