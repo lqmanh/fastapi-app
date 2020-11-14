@@ -1,9 +1,9 @@
 from tortoise.fields import BooleanField, CharField
 
-from {{cookiecutter.package_name}}.common.base_model import BaseModel
+from {{cookiecutter.package_name}}.common.types import TortoiseBaseModel
 
 
-class User(BaseModel):
+class User(TortoiseBaseModel):
     username = CharField(64, unique=True)
     password_hash = CharField(255)
     is_active = BooleanField(default=True)
@@ -14,4 +14,3 @@ class User(BaseModel):
     class PydanticMeta:
         # always exclude password_hash
         exclude = ("password_hash",)
-
