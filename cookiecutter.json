@@ -1,12 +1,16 @@
 {
   "project_name": "FastAPI App",
   "project_slug": "{{cookiecutter.project_name.lower().replace(' ', '-')}}",
-
   "package_name": "{{cookiecutter.project_slug.replace('-', '_')}}",
   "cli": "{{cookiecutter.project_slug}}",
 
   "description": "App's short description",
   "version": "0.1.0",
-  "author_name": "Your Name",
-  "author_email": "yourname@example.com"
+  "author_name": "My Name",
+  "author_email": "myname@example.com",
+
+  "database_driver": [null, "asyncpg", "aiomysql"],
+  "database_uri": "sqlite://db.sqlite3",
+
+  "jwt_secret": "$3cr3t"
 }

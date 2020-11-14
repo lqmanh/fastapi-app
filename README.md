@@ -6,7 +6,7 @@ FastAPI app template
 
 - Python
 - FastAPI + Uvicorn
-- Tortoise ORM + PostgreSQL
+- Tortoise ORM + SQLite/PostgreSQL/MySQL/MariaDB
 - Typer
 
 ## Usage

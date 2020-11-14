@@ -8,7 +8,7 @@
 
 - Python >= 3.7
 - Poetry >= 1
-- PostgreSQL >= 9.2
+- SQLite/PostgreSQL/MySQL/MariaDB
 - [Environment variables](.env.example)
 
 ### Instructions
@@ -17,12 +17,18 @@
 $ poetry install
 ```
 
+### Init database migrations
+
+```sh
+$ poetry run aerich init-db
+```
+
 ## Usage
 
 ### Run web app
 
 ```sh
-$ poetry run uvicorn {{cookiecutter.package_name}}.main:app --reload
+$ poetry run uvicorn {{cookiecutter.package_name}}.server:app --reload
 ```
 
 ### Run CLI app

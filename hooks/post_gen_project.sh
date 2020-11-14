@@ -12,7 +12,7 @@ poetry add \
 # Install Tortoise ORM dependencies
 poetry add \
     tortoise-orm \
-    asyncpg
+    {{cookiecutter.database_driver if cookiecutter.database_driver}}
 
 # Install Typer dependencies
 poetry add \
