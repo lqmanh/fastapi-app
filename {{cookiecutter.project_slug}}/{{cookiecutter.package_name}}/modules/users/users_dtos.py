@@ -1,4 +1,4 @@
-from pydantic import validator
+from pydantic import BaseModel, validator
 
 from {{cookiecutter.package_name}}.common.types import CrudMethod
 from {{cookiecutter.package_name}}.common.utils import create_pydantic_model
@@ -22,3 +22,8 @@ class UserCreate(create_pydantic_model(User, crud_method=CrudMethod.Create)):
 
 
 UserRead = create_pydantic_model(User, crud_method=CrudMethod.Read)
+
+
+class LoginResponse(BaseModel):
+    access_token: str
+    token_type: str

@@ -22,3 +22,6 @@ TORTOISE_ORM_CONFIG = {
         }
     },
 }
+
+JWT_SECRET = os.getenv("JWT_SECRET")
+JWT_EXP_SECONDS = -1  # No EXP
