@@ -1,5 +1,5 @@
 import asyncio
-from typing import List
+from typing import Tuple
 
 from fastapi import Depends
 from fastapi_utils.cbv import cbv
@@ -22,9 +22,8 @@ class UsersController:
         return await UserRead.from_tortoise_orm(user)
 
     @router.get("/")
-    async def read_users(self) -> List[UserRead]:
+    async def read_users(self) -> Tuple[UserRead]:
         users = await self.users_service.read_users()
         return await asyncio.gather(
             *(UserRead.from_tortoise_orm(user) for user in users)
         ) 
-
