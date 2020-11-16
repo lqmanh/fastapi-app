@@ -11,8 +11,8 @@ poetry add \
 
 # Install Tortoise ORM dependencies
 poetry add \
-    tortoise-orm \
-    {{cookiecutter.database_driver if cookiecutter.database_driver}}
+    {% if cookiecutter.database_driver %} tortoise-orm[{{cookiecutter.database_driver}}] {% else %} tortoise-orm {% endif %} \
+    aerich
 
 # Install Typer dependencies
 poetry add \
