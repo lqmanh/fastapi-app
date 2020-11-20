@@ -5,7 +5,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
-from {{cookiecutter.package_name}}.config import PYTHON_ENV, ROOT_PATH, TORTOISE_ORM_CONFIG
+from {{cookiecutter.package_name}}.common.deps import get_settings
 from {{cookiecutter.package_name}}.modules.users import users_controller
 
 
@@ -13,19 +13,20 @@ with open(path.join(path.dirname(path.abspath(__file__)), "../pyproject.toml")) 
     pyproject = tomlkit.parse(f.read())
 
 
+settings = get_settings()
 app = FastAPI(
-    debug=not PYTHON_ENV.startswith("prod"),
+    debug=not settings.python_env.startswith("prod"),
     title=pyproject["tool"]["poetry"]["name"],
     description=pyproject["tool"]["poetry"]["description"],
     version=pyproject["tool"]["poetry"]["version"],
-    root_path=ROOT_PATH,
+    root_path=settings.root_path,
 )
 
 
 #
 # register all middlewares & other stuff here
 #
-register_tortoise(app, TORTOISE_ORM_CONFIG, add_exception_handlers=True)
+register_tortoise(app, settings.tortoise_orm_config, add_exception_handlers=True)
 
 app.add_middleware(
     CORSMiddleware,
@@ -45,7 +46,7 @@ app.add_middleware(
 #
 # register all routers here
 #
-app.include_router(users_controller.router, prefix="/v1/users")
+app.include_router(users_controller.router, prefix="/v1/users", tags=["Users"])
 
 
 #
@@ -55,7 +56,7 @@ app.include_router(users_controller.router, prefix="/v1/users")
 def pong(req: Request) -> dict:
     return {
         "message": "PONG",
-        "environment": PYTHON_ENV,
+        "environment": settings.python_env,
         "root_path": req.scope.get("root_path"),
         "build_revision": pyproject["tool"]["poetry"]["version"],
         "project": pyproject,

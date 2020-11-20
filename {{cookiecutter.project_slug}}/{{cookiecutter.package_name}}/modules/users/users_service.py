@@ -1,20 +1,22 @@
 from datetime import datetime, timedelta
 from typing import Any, Dict, List
 
-from fastapi.exceptions import HTTPException
+from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from jose.constants import ALGORITHMS
 from passlib.context import CryptContext
 from tortoise.exceptions import DoesNotExist
 
-from {{cookiecutter.package_name}}.config import JWT_EXP_SECONDS, JWT_SECRET
+from {{cookiecutter.package_name}}.common.deps import get_settings
+from {{cookiecutter.package_name}}.config import Settings
+from {{cookiecutter.package_name}}.modules.users.users_dtos import UserCreate
 from {{cookiecutter.package_name}}.modules.users.users_models import User
-from {{cookiecutter.package_name}}.modules.users.users_dtos import UserCreate 
 
 
 class UsersService:
-    def __init__(self):
+    def __init__(self, settings: Settings = Depends(get_settings)):
+        self.settings = settings
         self.crypt_ctx = CryptContext(schemes=["bcrypt"])
 
     def _get_password_hash(self, password: str) -> str:
@@ -25,14 +27,19 @@ class UsersService:
 
     def _encode_access_token(self, username: str) -> str:
         payload: Dict[str, Any] = {"sub": username}
-        if JWT_EXP_SECONDS > 0:
-            payload["exp"] = datetime.utcnow() + timedelta(seconds=JWT_EXP_SECONDS)
-        access_token = jwt.encode(payload, JWT_SECRET, algorithm=ALGORITHMS.HS256)
+        exp = self.settings.jwt_exp_seconds
+        if exp > 0:
+            payload["exp"] = datetime.utcnow() + timedelta(seconds=exp)
+        access_token = jwt.encode(
+            payload, self.settings.jwt_secret, algorithm=ALGORITHMS.HS256
+        )
         return access_token
 
     async def decode_access_token(self, token: str) -> User:
         try:
-            payload = jwt.decode(token, JWT_SECRET, algorithms=[ALGORITHMS.HS256])
+            payload = jwt.decode(
+                token, self.settings.jwt_secret, algorithms=[ALGORITHMS.HS256]
+            )
             username = payload["sub"]
             user = await User.get(username=username)
             return user
