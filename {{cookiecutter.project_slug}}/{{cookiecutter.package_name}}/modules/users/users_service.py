@@ -8,8 +8,10 @@ from jose.constants import ALGORITHMS
 from passlib.context import CryptContext
 from tortoise.exceptions import DoesNotExist
 
-from {{cookiecutter.package_name}}.common.deps import get_settings
-from {{cookiecutter.package_name}}.config import Settings
+from {{cookiecutter.package_name}}.modules.settings.settings_deps import (
+    Settings,
+    get_settings,
+)
 from {{cookiecutter.package_name}}.modules.users.users_dtos import UserCreate
 from {{cookiecutter.package_name}}.modules.users.users_models import User
 

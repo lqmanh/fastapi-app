@@ -5,7 +5,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
-from {{cookiecutter.package_name}}.common.deps import get_settings
+from {{cookiecutter.package_name}}.modules.settings.settings_deps import get_settings
 from {{cookiecutter.package_name}}.modules.users import users_controller
 
 
