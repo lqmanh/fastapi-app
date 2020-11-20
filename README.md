@@ -1,6 +1,6 @@
 # fastapi-app
 
-FastAPI app template
+An opinionated modular FastAPI app template inspired by [NestJS](https://nestjs.com).
 
 ## Tech Stack
 
