@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
 from {{cookiecutter.package_name}}.modules.settings.settings_deps import get_settings
+from {{cookiecutter.package_name}}.modules.access_control import access_control_controller
 from {{cookiecutter.package_name}}.modules.users import users_controller
 
 
@@ -46,7 +47,13 @@ app.add_middleware(
 #
 # register all routers here
 #
-app.include_router(users_controller.router, prefix="/v1/users", tags=["Users"])
+app.include_router(
+    access_control_controller.router,
+    prefix="/v1/access-control",
+    tags=["Access Control"],
+)
+
+app.include_router(access_control_controller.router, prefix="/v1/users", tags=["Users"])
 
 
 #

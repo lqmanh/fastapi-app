@@ -1,7 +1,13 @@
 from functools import lru_cache
 import os
+from types import ModuleType
+from typing import Tuple
 
+import aerich.models
 from pydantic import BaseSettings
+
+from {{cookiecutter.package_name}}.modules.access_control import access_control_models
+from {{cookiecutter.package_name}}.modules.users import users_models
 
 
 class Settings(BaseSettings):
@@ -15,6 +21,10 @@ class Settings(BaseSettings):
         env_file = ".env.example"
 
     @property
+    def tortoise_orm_model_modules(self) -> Tuple[ModuleType]:
+        return (access_control_models, users_models, aerich.models)
+
+    @property
     def tortoise_orm_config(self) -> dict:
         return {
             "connections": {
@@ -22,10 +32,7 @@ class Settings(BaseSettings):
             },
             "apps": {
                 "default": {
-                    "models": (
-                        "{{cookiecutter.package_name}}.modules.users.users_models",
-                        "aerich.models",
-                    )
+                    "models": self.tortoise_orm_model_modules,
                 }
             },
         }
