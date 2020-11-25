@@ -1,4 +1,5 @@
-from typing import Callable, Iterable, Optional, Tuple, Type
+from types import ModuleType
+from typing import Callable, Iterable, Optional, Tuple, Type, Union
 
 from fastapi import FastAPI
 from tortoise import Tortoise
@@ -8,8 +9,8 @@ from tortoise.models import Model
 from {{cookiecutter.package_name}}.common.types import CrudMethod
 
 
-def init_tortoise_models(modules: Iterable[str]):
-    Tortoise.init_models(list(modules), "default")
+def init_tortoise_models(modules: Iterable[Union[ModuleType, str]]):
+    Tortoise.init_models(modules, "default")
 
 
 def create_pydantic_model(
