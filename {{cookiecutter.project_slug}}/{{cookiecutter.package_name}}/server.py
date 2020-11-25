@@ -13,8 +13,8 @@ from {{cookiecutter.package_name}}.modules.users import users_controller
 with open(path.join(path.dirname(path.abspath(__file__)), "../pyproject.toml")) as f:
     pyproject = tomlkit.parse(f.read())
 
-
 settings = get_settings()
+
 app = FastAPI(
     debug=not settings.python_env.startswith("prod"),
     title=pyproject["tool"]["poetry"]["name"],
@@ -53,7 +53,7 @@ app.include_router(
     tags=["Access Control"],
 )
 
-app.include_router(access_control_controller.router, prefix="/v1/users", tags=["Users"])
+app.include_router(users_controller.router, prefix="/v1/users", tags=["Users"])
 
 
 #
