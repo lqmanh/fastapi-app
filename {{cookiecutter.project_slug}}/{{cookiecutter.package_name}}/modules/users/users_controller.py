@@ -29,7 +29,7 @@ class UsersController:
         users = await self.users_service.read_users()
         return await asyncio.gather(
             *(UserRead.from_tortoise_orm(user) for user in users)
-        ) 
+        )
 
     @router.post("/login")
     async def login(
@@ -39,5 +39,7 @@ class UsersController:
         return LoginResponse(**result)
 
     @router.get("/me")
-    async def read_current_user(self, user: User = Depends(get_current_active_user)) -> UserRead:
+    async def read_current_user(
+        self, user: User = Depends(get_current_active_user)
+    ) -> UserRead:
         return await UserRead.from_tortoise_orm(user)

@@ -6,7 +6,7 @@ authors = ["{{cookiecutter.author_name}} <{{cookiecutter.author_email}}>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9"
 
 [tool.poetry.dev-dependencies]
 

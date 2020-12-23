@@ -1,12 +1,14 @@
+import asyncio
+import functools
 from types import ModuleType
 from typing import Callable, Iterable, Optional, Tuple, Type, Union
 
-from fastapi import FastAPI
 from tortoise import Tortoise
 from tortoise.contrib.pydantic import PydanticModel, pydantic_model_creator
 from tortoise.models import Model
 
 from {{cookiecutter.package_name}}.common.types import CrudMethod
+from {{cookiecutter.package_name}}.config import settings
 
 
 def init_tortoise_models(modules: Iterable[Union[ModuleType, str]]):
@@ -51,5 +53,24 @@ def create_pydantic_models(
     )
 
 
-def register_task(app: FastAPI, task: Callable) -> None:
-    app.on_event("startup")(task)
+def _coro_wrapper(f: Callable):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        return asyncio.run(f(*args, **kwargs))
+
+    return wrapper
+
+
+def _tortoise_wrapper(f: Callable):
+    @functools.wraps(f)
+    async def wrapper(*args, **kwargs):
+        await Tortoise.init(settings.tortoise_orm_config)
+        await Tortoise.generate_schemas()
+        await f(*args, **kwargs)
+        await Tortoise.close_connections()
+
+    return wrapper
+
+
+def cli_wrapper(f: Callable):
+    return _coro_wrapper(_tortoise_wrapper(f))

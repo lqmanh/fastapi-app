@@ -1,19 +1,17 @@
 from os import path
 
 import tomlkit
+import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
-from {{cookiecutter.package_name}}.modules.settings.settings_deps import get_settings
-from {{cookiecutter.package_name}}.modules.access_control import access_control_controller
+from {{cookiecutter.package_name}}.config import settings
 from {{cookiecutter.package_name}}.modules.users import users_controller
 
 
-with open(path.join(path.dirname(path.abspath(__file__)), "../pyproject.toml")) as f:
+with open(path.join(path.dirname(__file__), "../pyproject.toml")) as f:
     pyproject = tomlkit.parse(f.read())
-
-settings = get_settings()
 
 app = FastAPI(
     debug=not settings.python_env.startswith("prod"),
@@ -40,19 +38,8 @@ app.add_middleware(
 
 
 #
-# register all event handlers & scheduled tasks here
-#
-
-
-#
 # register all routers here
 #
-app.include_router(
-    access_control_controller.router,
-    prefix="/v1/access-control",
-    tags=["Access Control"],
-)
-
 app.include_router(users_controller.router, prefix="/v1/users", tags=["Users"])
 
 
@@ -68,3 +55,11 @@ def pong(req: Request) -> dict:
         "build_revision": pyproject["tool"]["poetry"]["version"],
         "project": pyproject,
     }
+
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "{{cookiecutter.package_name}}.server:app",
+        host="0.0.0.0",
+        reload=not settings.python_env.startswith("prod"),
+    )

@@ -6,7 +6,7 @@ An opinionated modular FastAPI app template inspired by [NestJS](https://nestjs.
 
 - Python
 - FastAPI + Uvicorn
-- Tortoise ORM + SQLite/PostgreSQL/MySQL/MariaDB
+- Tortoise ORM + Aerich
 - Typer
 
 ## Usage
