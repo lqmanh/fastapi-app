@@ -6,7 +6,7 @@
 
 ### Requirements
 
-- Python >= 3.7
+- Python >= 3.9
 - Poetry >= 1
 - SQLite/PostgreSQL/MySQL/MariaDB
 - [Environment variables](.env.example)
@@ -17,22 +17,42 @@
 $ poetry install
 ```
 
-### Init database migrations
+### Export dependencies to `requirements.txt`
 
 ```sh
-$ poetry run aerich init-db
+$ poetry export -f requirements.txt -o requirements.txt --without-hashes
 ```
 
 ## Usage
 
-### Run web app
+### Run apps
+
+#### Run web app
 
 ```sh
-$ poetry run uvicorn {{cookiecutter.package_name}}.server:app --reload
+$ poetry run python {{cookiecutter.package_name}}/server.py
 ```
 
-### Run CLI app
+#### Run CLI app
 
 ```sh
 $ poetry run {{cookiecutter.cli}}
+```
+
+or
+
+```sh
+$ poetry run python {{cookiecutter.package_name}}/cli.py
+```
+
+### API documentation
+
+#### Web app
+
+Go to `/docs` or `/redoc` for more details.
+
+#### CLI app
+
+```sh
+$ poetry run {{cookiecutter.cli}} --help
 ```

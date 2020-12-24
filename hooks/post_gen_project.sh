@@ -2,7 +2,7 @@
 
 # Install FastAPI with Uvicorn dependencies
 poetry add \
-    uvicorn \
+    uvicorn[standard] \
     fastapi \
     fastapi-utils \
     python-multipart \
@@ -22,7 +22,7 @@ poetry add \
 poetry add \
     python-dotenv \
     tomlkit
-    
+
 # Install dev dependencies
 poetry add --dev \
     pytest \
