@@ -5,22 +5,22 @@ poetry add \
     uvicorn[standard] \
     fastapi \
     fastapi-utils \
+    pydantic[dotenv] \
     python-multipart \
     python-jose[cryptography] \
     passlib[bcrypt]
+
+# Install Typer dependencies
+poetry add \
+    typer
 
 # Install Tortoise ORM dependencies
 poetry add \
     {% if cookiecutter.database_driver %} tortoise-orm[{{cookiecutter.database_driver}}] {% else %} tortoise-orm {% endif %} \
     aerich
 
-# Install Typer dependencies
-poetry add \
-    typer
-
 # Install other dependencies
 poetry add \
-    python-dotenv \
     tomlkit
 
 # Install dev dependencies
@@ -31,4 +31,4 @@ poetry add --dev \
     black
 
 
-git init && git add . && git commit -m 'Initial commit'
+git init && git add . && git commit -m 'Initial commit. Bootstrap project'
