@@ -17,7 +17,7 @@ async def init():
     users_service = UsersService()
 
     try:
-        username = prompt("Username", default=phone)
+        username = prompt("Username")
         password = prompt("Password", hide_input=True, confirmation_prompt=True)
         user = await users_service.create_user(
             UserCreate(username=username, password=password)
