@@ -40,7 +40,7 @@ app.add_middleware(
 #
 # register all routers here
 #
-app.include_router(users_controller.router, prefix="/v1/users", tags=["Users"])
+app.include_router(users_controller.router, prefix="/v1/users")
 
 
 #

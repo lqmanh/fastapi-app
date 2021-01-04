@@ -9,7 +9,7 @@ from {{cookiecutter.package_name}}.modules.users.users_models import User
 from {{cookiecutter.package_name}}.modules.users.users_service import UsersService
 
 
-router = InferringRouter()
+router = InferringRouter(tags=["Users"])
 
 
 @cbv(router)
