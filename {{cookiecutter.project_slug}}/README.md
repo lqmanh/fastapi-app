@@ -2,6 +2,10 @@
 
 {{cookiecutter.description}}
 
+## Project Guidelines
+
+See [github:lqmanh/fastapi-app](https://github.com/lqmanh/fastapi-app).
+
 ## Installation
 
 ### Requirements
