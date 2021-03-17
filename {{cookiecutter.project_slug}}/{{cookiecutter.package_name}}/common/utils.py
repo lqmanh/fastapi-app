@@ -1,7 +1,7 @@
 import asyncio
 import functools
 from types import ModuleType
-from typing import Callable, Iterable, Optional, Tuple, Type, Union
+from typing import Callable, Iterable, Optional, Type, Union
 
 from tortoise import Tortoise
 from tortoise.contrib.pydantic import PydanticModel, pydantic_model_creator
@@ -20,9 +20,9 @@ def create_pydantic_model(
     *,
     crud_method: CrudMethod,
     name: Optional[str] = None,
-    computed: Tuple[str, ...] = (),
-    include: Tuple[str, ...] = (),
-    exclude: Tuple[str, ...] = (),
+    computed: tuple[str, ...] = (),
+    include: tuple[str, ...] = (),
+    exclude: tuple[str, ...] = (),
     exclude_readonly: bool = False,
 ) -> Type[PydanticModel]:
     if crud_method == CrudMethod.Create or crud_method == CrudMethod.Update:
@@ -47,7 +47,7 @@ def create_pydantic_models(
         CrudMethod.Update,
         CrudMethod.Delete,
     ),
-) -> Tuple[Type[PydanticModel], ...]:
+) -> tuple[Type[PydanticModel], ...]:
     return tuple(
         create_pydantic_model(cls, crud_method=method) for method in crud_methods
     )
@@ -66,8 +66,10 @@ def _tortoise_wrapper(f: Callable):
     async def wrapper(*args, **kwargs):
         await Tortoise.init(settings.tortoise_orm_config)
         await Tortoise.generate_schemas()
-        await f(*args, **kwargs)
-        await Tortoise.close_connections()
+        try:
+            await f(*args, **kwargs)
+        finally:
+            await Tortoise.close_connections()
 
     return wrapper
 
