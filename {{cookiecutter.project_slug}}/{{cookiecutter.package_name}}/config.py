@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     database_uri: str
     jwt_secret: str
     jwt_exp_seconds: int = -1  # no EXP
+    pagination_max_limit: int = 100
 
     class Config:
         env_file = ".env.example"
