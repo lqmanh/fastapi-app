@@ -12,6 +12,9 @@ from {{cookiecutter.package_name}}.config import settings
 
 
 def init_tortoise_models(modules: Iterable[Union[ModuleType, str]]):
+    """
+    See https://tortoise-orm.readthedocs.io/en/latest/contrib/pydantic.html#relations-early-init.
+    """
     Tortoise.init_models(modules, "default")
 
 

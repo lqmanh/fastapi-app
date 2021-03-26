@@ -1,6 +1,6 @@
 # fastapi-app
 
-An opinionated modular FastAPI app template inspired by [NestJS](https://nestjs.com).
+An opinionated modular FastAPI app boilerplate inspired by [NestJS](https://nestjs.com).
 
 ## Tech Stack
 
@@ -21,7 +21,8 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 {{cookiecutter.project_slug}}        # Project root
 ├── {{cookiecutter.package_name}}    # Root module, containing all source code
 │   ├── common                       # Common components
-│   │   ├── types.py                 # General types
+│   │   ├── deps.py                  # Common injectable dependencies
+│   │   ├── types.py                 # Common types
 │   │   └── utils.py                 # Helper functions, decorators,...
 │   ├── modules                      # Where magic happens
 │   │   └── users                    # Account management module
