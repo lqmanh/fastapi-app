@@ -4,7 +4,7 @@ from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
 
 from {{cookiecutter.package_name}}.modules.users.users_deps import get_current_active_user
-from {{cookiecutter.package_name}}.modules.users.users_dtos import LoginResponse, UserCreate, UserRead
+from {{cookiecutter.package_name}}.modules.users.users_dtos import LoginOutput, UserCreate, UserRead
 from {{cookiecutter.package_name}}.modules.users.users_models import User
 from {{cookiecutter.package_name}}.modules.users.users_service import UsersService
 
@@ -24,9 +24,9 @@ class UsersController:
     @router.post("/login")
     async def login(
         self, form_data: OAuth2PasswordRequestForm = Depends()
-    ) -> LoginResponse:
+    ) -> LoginOutput:
         result = await self.users_service.login(form_data)
-        return LoginResponse(**result)
+        return LoginOutput(**result)
 
     @router.get("/me")
     async def read_current_user(

@@ -22,16 +22,18 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 ├── {{cookiecutter.package_name}}    # Root module, containing all source code
 │   ├── common                       # Common components
 │   │   ├── deps.py                  # Common injectable dependencies
-│   │   ├── types.py                 # Common types
-│   │   └── utils.py                 # Helper functions, decorators,...
+│   │   ├── types.py                 # Common types, enums,...
+│   │   └── utils.py                 # Common helper functions, decorators,...
 │   ├── modules                      # Where magic happens
 │   │   └── users                    # Account management module
 │   │       ├── users_cli.py         # CLI sub-app
-│   │       ├── users_controller.py  # The C in MVC
+│   │       ├── users_controller.py  # Controller in NestJS, class-based view in Django
 │   │       ├── users_deps.py        # Injectable dependencies
 │   │       ├── users_dtos.py        # DTOs
 │   │       ├── users_models.py      # Domain models
-│   │       └── users_service.py     # Business logic, also a special kind of dependencies
+│   │       ├── users_service.py     # Business logic, also a special kind of dependencies
+│   │       ├── users_types.py       # Types, enums,...
+│   │       └── users_utils.py       # Helper functions, decorators,...
 │   ├── cli.py                       # Root CLI app
 │   ├── config.py                    # Global configurations
 │   └── server.py                    # HTTP server
