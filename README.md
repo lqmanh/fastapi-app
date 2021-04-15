@@ -21,10 +21,13 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 {{cookiecutter.project_slug}}        # Project root
 ├── {{cookiecutter.package_name}}    # Root module, containing all source code
 │   ├── common                       # Common components
-│   │   ├── deps.py                  # Common injectable dependencies
 │   │   ├── types.py                 # Common types, enums,...
 │   │   └── utils.py                 # Common helper functions, decorators,...
 │   ├── modules                      # Where magic happens
+│   │   ├── pagination               #
+│   │   │   ├── pagination_deps.py   #
+│   │   │   ├── pagination_dtos.py   #
+│   │   │   └── pagination_types.py  #
 │   │   └── users                    # Account management module
 │   │       ├── users_cli.py         # CLI sub-app
 │   │       ├── users_controller.py  # Controller in NestJS, class-based view in Django
