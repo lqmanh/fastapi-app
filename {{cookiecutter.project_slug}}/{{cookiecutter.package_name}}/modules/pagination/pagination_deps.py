@@ -20,7 +20,7 @@ class Pagination(Generic[PT]):
         self.limit = limit
         self.offset = offset
 
-    def to_pagination_output(self, data: PT, total: int) -> PaginationOutput[PT]:
+    def to_pagination_output(self, total: int, data: PT) -> PaginationOutput[PT]:
         return PaginationOutput(
             total=total,
             limit=self.limit,
