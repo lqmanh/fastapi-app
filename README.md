@@ -24,7 +24,9 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   │   ├── types.py                 # Common types, enums,...
 │   │   └── utils.py                 # Common helper functions, decorators,...
 │   ├── modules                      # Where magic happens
-│   │   ├── pagination               #
+│   │   ├── logging                  # Logging module
+│   │   │   └── logging_deps.py      #
+│   │   ├── pagination               # Pagination module
 │   │   │   ├── pagination_deps.py   #
 │   │   │   ├── pagination_dtos.py   #
 │   │   │   └── pagination_types.py  #
