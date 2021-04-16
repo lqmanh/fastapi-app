@@ -10,12 +10,18 @@ def get_logger() -> Logger:
 
     logger.setLevel(DEBUG if not settings.python_env.startswith("prod") else INFO)
 
-    handler = StreamHandler()
-    handler.setFormatter(
+    std_handler = StreamHandler()
+    std_handler.setLevel(INFO)
+    std_handler.setFormatter(
+        Formatter("%(asctime)s %(name)s %(levelname)s %(message)s")
+    )
+    debug_handler = StreamHandler()
+    debug_handler.addFilter(lambda record: record.levelno == DEBUG)
+    debug_handler.setFormatter(
         Formatter(
             "%(asctime)s %(name)s %(levelname)s %(pathname)s:%(lineno)d %(message)s"
         )
     )
-    logger.handlers = [handler]
+    logger.handlers = [std_handler, debug_handler]
 
     return logger

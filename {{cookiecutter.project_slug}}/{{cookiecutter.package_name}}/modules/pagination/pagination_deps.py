@@ -1,13 +1,15 @@
-from typing import Generic
+import asyncio
+from typing import Callable, Generic, Iterable
 
 from fastapi import Query
+from tortoise.queryset import QuerySet
 
 from {{cookiecutter.package_name}}.config import settings
 from {{cookiecutter.package_name}}.modules.pagination.pagination_dtos import PaginationOutput
-from {{cookiecutter.package_name}}.modules.pagination.pagination_types import PT
+from {{cookiecutter.package_name}}.modules.pagination.pagination_types import MT, PT
 
 
-class Pagination(Generic[PT]):
+class Pagination(Generic[MT, PT]):
     max_limit = settings.pagination_max_limit
     limit: int
     offset: int
@@ -20,10 +22,21 @@ class Pagination(Generic[PT]):
         self.limit = limit
         self.offset = offset
 
-    def to_pagination_output(self, total: int, data: PT) -> PaginationOutput[PT]:
+    def to_pagination_output(
+        self, total: int, data: Iterable[PT]
+    ) -> PaginationOutput[PT]:
         return PaginationOutput(
             total=total,
             limit=self.limit,
             offset=self.offset,
             data=list(data),
         )
+
+    async def paginate(
+        self, queryset: QuerySet[MT], mapper: Callable[[MT], PT]
+    ) -> PaginationOutput[PT]:
+        total, data = await asyncio.gather(
+            queryset.count(),
+            queryset.limit(self.limit).offset(self.offset),
+        )
+        return self.to_pagination_output(total, map(mapper, data))

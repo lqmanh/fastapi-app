@@ -1,11 +1,11 @@
 from typing import Generic
 
-from pydantic import BaseModel
+from pydantic.generics import GenericModel
 
 from {{cookiecutter.package_name}}.modules.pagination.pagination_types import PT
 
 
-class PaginationOutput(BaseModel, Generic[PT]):
+class PaginationOutput(GenericModel, Generic[PT]):
     total: int
     limit: int
     offset: int

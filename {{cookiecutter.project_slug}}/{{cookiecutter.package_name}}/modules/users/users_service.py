@@ -7,6 +7,7 @@ from jose import JWTError, jwt
 from jose.constants import ALGORITHMS
 from passlib.context import CryptContext
 from tortoise.exceptions import DoesNotExist
+from tortoise.queryset import QuerySet
 
 from {{cookiecutter.package_name}}.config import settings
 from {{cookiecutter.package_name}}.modules.users.users_dtos import UserCreate
@@ -55,8 +56,8 @@ class UsersService:
         )
         return user
 
-    async def read_users(self) -> List[User]:
-        return await User.all()
+    def read_users_queryset(self, *, filters: dict = {}) -> QuerySet[User]:
+        return User.filter(**filters)
 
     async def login(self, form_data: OAuth2PasswordRequestForm) -> Dict[str, str]:
         user = await User.get_or_none(username=form_data.username)

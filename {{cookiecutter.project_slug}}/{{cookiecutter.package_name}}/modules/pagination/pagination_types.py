@@ -1,3 +1,9 @@
-from typing import Iterable, TypeVar
+from typing import TypeVar
 
-PT = TypeVar("PT", Iterable)
+from pydantic import BaseModel
+
+from {{cookiecutter.package_name}}.common.types import TortoiseBaseModel
+
+MT = TypeVar("MT", bound=TortoiseBaseModel)
+
+PT = TypeVar("PT", bound=BaseModel)
