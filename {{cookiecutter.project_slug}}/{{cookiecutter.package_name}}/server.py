@@ -1,6 +1,6 @@
-from os import path
+from pathlib import Path
 
-import tomlkit
+import rtoml
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,8 +10,7 @@ from {{cookiecutter.package_name}}.config import settings
 from {{cookiecutter.package_name}}.modules.users import users_controller
 
 
-with open(path.join(path.dirname(__file__), "../pyproject.toml")) as f:
-    pyproject = tomlkit.parse(f.read())
+pyproject = rtoml.load(Path(__file__).parent.joinpath("../pyproject.toml"))
 
 app = FastAPI(
     debug=not settings.python_env.startswith("prod"),

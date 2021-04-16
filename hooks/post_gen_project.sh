@@ -21,7 +21,7 @@ poetry add \
 
 # Install other dependencies
 poetry add \
-    tomlkit
+    rtoml
 
 # Install dev dependencies
 poetry add --dev \
