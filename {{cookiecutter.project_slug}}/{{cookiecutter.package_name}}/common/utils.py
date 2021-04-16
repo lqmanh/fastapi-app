@@ -7,8 +7,9 @@ from tortoise import Tortoise
 from tortoise.contrib.pydantic import PydanticModel, pydantic_model_creator
 from tortoise.models import Model
 
-from {{cookiecutter.package_name}}.common.types import CrudMethod
 from {{cookiecutter.package_name}}.config import settings
+
+from .types import CrudMethod
 
 
 def init_tortoise_models(modules: Iterable[Union[ModuleType, str]]):

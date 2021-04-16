@@ -10,8 +10,9 @@ from tortoise.exceptions import DoesNotExist
 from tortoise.queryset import QuerySet
 
 from {{cookiecutter.package_name}}.config import settings
-from {{cookiecutter.package_name}}.modules.users.users_dtos import UserCreate
-from {{cookiecutter.package_name}}.modules.users.users_models import User
+
+from .users_dtos import UserCreate
+from .users_models import User
 
 
 class UsersService:

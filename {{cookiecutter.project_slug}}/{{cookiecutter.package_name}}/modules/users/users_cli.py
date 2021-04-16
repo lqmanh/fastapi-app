@@ -2,8 +2,9 @@ from typer import Abort, Typer, prompt, secho
 from typer.colors import GREEN, RED
 
 from {{cookiecutter.package_name}}.common.utils import cli_wrapper
-from {{cookiecutter.package_name}}.modules.users.users_dtos import UserCreate
-from {{cookiecutter.package_name}}.modules.users.users_service import UsersService
+
+from .users_dtos import UserCreate
+from .users_service import UsersService
 
 
 app = Typer()

@@ -3,10 +3,10 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
 
-from {{cookiecutter.package_name}}.modules.users.users_deps import get_current_active_user
-from {{cookiecutter.package_name}}.modules.users.users_dtos import LoginOutput, UserCreate, UserRead
-from {{cookiecutter.package_name}}.modules.users.users_models import User
-from {{cookiecutter.package_name}}.modules.users.users_service import UsersService
+from .users_deps import get_current_active_user
+from .users_dtos import LoginOutput, UserCreate, UserRead
+from .users_models import User
+from .users_service import UsersService
 
 
 router = InferringRouter(tags=["Users"])

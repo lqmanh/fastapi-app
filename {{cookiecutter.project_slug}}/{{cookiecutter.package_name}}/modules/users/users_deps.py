@@ -2,8 +2,8 @@ from fastapi import Depends
 from fastapi.exceptions import HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
-from {{cookiecutter.package_name}}.modules.users.users_models import User
-from {{cookiecutter.package_name}}.modules.users.users_service import UsersService
+from .users_models import User
+from .users_service import UsersService
 
 
 async def get_current_user(

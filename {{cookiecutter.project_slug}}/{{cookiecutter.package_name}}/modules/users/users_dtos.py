@@ -2,8 +2,9 @@ from pydantic import BaseModel, validator
 
 from {{cookiecutter.package_name}}.common.types import CrudMethod
 from {{cookiecutter.package_name}}.common.utils import create_pydantic_model
-from {{cookiecutter.package_name}}.modules.users.users_models import User
-from {{cookiecutter.package_name}}.modules.users.users_utils import check_password, check_username
+
+from .users_models import User
+from .users_utils import check_password, check_username
 
 
 class UserCreate(create_pydantic_model(User, crud_method=CrudMethod.Create)):

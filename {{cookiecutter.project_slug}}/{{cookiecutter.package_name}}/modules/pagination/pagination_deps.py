@@ -5,8 +5,9 @@ from fastapi import Query
 from tortoise.queryset import QuerySet
 
 from {{cookiecutter.package_name}}.config import settings
-from {{cookiecutter.package_name}}.modules.pagination.pagination_dtos import PaginationOutput
-from {{cookiecutter.package_name}}.modules.pagination.pagination_types import MT, PT
+
+from .pagination_dtos import PaginationOutput
+from .pagination_types import MT, PT
 
 
 class Pagination(Generic[MT, PT]):
