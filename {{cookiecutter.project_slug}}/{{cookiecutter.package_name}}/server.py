@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
 from {{cookiecutter.package_name}}.config import settings
+from {{cookiecutter.package_name}}.modules.scheduler.scheduler_deps import get_scheduler
 from {{cookiecutter.package_name}}.modules.users import users_controller
 
 
@@ -19,6 +20,20 @@ app = FastAPI(
     version=pyproject["tool"]["poetry"]["version"],
     root_path=settings.root_path,
 )
+
+
+#
+# register all event handlers here
+#
+@app.on_event("startup")
+def on_startup():
+    pass
+
+
+@app.on_event("shutdown")
+def on_shutdown():
+    scheduler = get_scheduler()
+    scheduler.shutdown()
 
 
 #

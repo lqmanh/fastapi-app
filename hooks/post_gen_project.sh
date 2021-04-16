@@ -22,6 +22,7 @@ poetry add \
 # Install other dependencies
 poetry add \
     rtoml
+    apscheduler
 
 # Install dev dependencies
 poetry add --dev \
