@@ -2,6 +2,13 @@
 
 An opinionated modular FastAPI app boilerplate inspired by [NestJS](https://nestjs.com).
 
+## Features
+
+- Pre-built user management system with OAuth2 authentication
+- Built-in pagination support
+- Preconfigured logger
+- Job scheduling with [APScheduler](https://github.com/agronholm/apscheduler)
+
 ## Tech Stack
 
 - Python
@@ -30,7 +37,9 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   │   │   ├── pagination_deps.py   #
 │   │   │   ├── pagination_dtos.py   #
 │   │   │   └── pagination_types.py  #
-│   │   └── users                    # Account management module
+│   │   ├── scheduler                # Job scheduler module
+│   │   │   └── scheduler_deps.py    #
+│   │   └── users                    # User management module
 │   │       ├── users_cli.py         # CLI sub-app
 │   │       ├── users_controller.py  # Controller in NestJS, class-based view in Django
 │   │       ├── users_deps.py        # Injectable dependencies
