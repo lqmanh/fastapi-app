@@ -4,11 +4,13 @@
 poetry add \
     uvicorn[standard] \
     fastapi \
-    fastapi-utils \
     pydantic[dotenv] \
     python-multipart \
     python-jose[cryptography] \
     passlib[bcrypt]
+
+# As currently the official package is not very active, we use a custom fork
+poetry add git+https://github.com/lqmanh/fastapi-utils.git#detached
 
 # Install Typer dependencies
 poetry add \
@@ -21,7 +23,7 @@ poetry add \
 
 # Install other dependencies
 poetry add \
-    rtoml
+    rtoml \
     apscheduler
 
 # Install dev dependencies
