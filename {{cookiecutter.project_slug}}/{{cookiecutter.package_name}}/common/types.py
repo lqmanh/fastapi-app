@@ -1,6 +1,6 @@
 from enum import Enum
 
-from tortoise.fields import DatetimeField
+from tortoise.fields import DatetimeField, IntField
 from tortoise.models import Model
 
 
@@ -10,6 +10,8 @@ class _TimestampMixin:
 
 
 class TortoiseBaseModel(_TimestampMixin, Model):
+    id = IntField(pk=True)
+
     class Meta:
         abstract = True
 

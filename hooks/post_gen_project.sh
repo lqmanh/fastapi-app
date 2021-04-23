@@ -9,7 +9,7 @@ poetry add \
     python-jose[cryptography] \
     passlib[bcrypt]
 
-# As currently the official package is not very active, we use a custom fork
+# As currently the official fastapi-utils is not very active, we use a custom fork
 poetry add git+https://github.com/lqmanh/fastapi-utils.git#detached
 
 # Install Typer dependencies
@@ -24,6 +24,7 @@ poetry add \
 # Install other dependencies
 poetry add \
     rtoml \
+    casbin \
     apscheduler
 
 # Install dev dependencies

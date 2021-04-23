@@ -31,6 +31,10 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   │   ├── types.py                 # Common types, enums,...
 │   │   └── utils.py                 # Common helper functions, decorators,...
 │   ├── modules                      # Where magic happens
+│   │   ├── ac                       # Access control module
+│   │   │   ├── ac_deps.py           #
+│   │   │   ├── ac_model.conf        # Casbin access model
+│   │   │   └── ac_policies.csv      # Casbin permission policies
 │   │   ├── logging                  # Logging module
 │   │   │   └── logging_deps.py      #
 │   │   ├── pagination               # Pagination module
