@@ -22,9 +22,9 @@ def get_authorized_user(
     enforcer: Enforcer = Depends(get_enforcer),
     user: User = Depends(get_current_active_user),
 ) -> User:
-    actor = user.id
-    action = req.method
-    resource = req.url.path
-    if enforcer.enforce(actor, action, resource):
+    sub = user.role
+    obj = req.url.path
+    act = req.method
+    if enforcer.enforce(sub, obj, act):
         return user
     raise HTTPException(status_code=403, detail="Forbidden")

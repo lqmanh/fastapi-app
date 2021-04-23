@@ -7,6 +7,7 @@ class User(TortoiseBaseModel):
     username = CharField(64, unique=True)
     password_hash = CharField(255)
     is_active = BooleanField(default=True)
+    role = CharField(255)
 
     class Meta:
         table = "users"

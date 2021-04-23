@@ -15,6 +15,8 @@ An opinionated modular FastAPI app boilerplate inspired by [NestJS](https://nest
 - FastAPI + Uvicorn
 - Tortoise ORM + Aerich
 - Typer
+- Casbin
+- APScheduler
 
 ## Usage
 
@@ -33,8 +35,8 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   ├── modules                      # Where magic happens
 │   │   ├── ac                       # Access control module
 │   │   │   ├── ac_deps.py           #
-│   │   │   ├── ac_model.conf        # Casbin access model
-│   │   │   └── ac_policies.csv      # Casbin permission policies
+│   │   │   ├── ac_model.conf        # Access control model
+│   │   │   └── ac_policies.csv      # Policies
 │   │   ├── logging                  # Logging module
 │   │   │   └── logging_deps.py      #
 │   │   ├── pagination               # Pagination module
