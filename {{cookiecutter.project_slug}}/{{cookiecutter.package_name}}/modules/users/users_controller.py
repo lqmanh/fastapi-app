@@ -3,11 +3,14 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
 
-from .users_deps import get_current_active_user
-from .users_dtos import LoginOutput, UserCreate, UserRead
+from {{cookiecutter.package_name}}.modules.ac.ac_deps import get_authorized_user
+from {{cookiecutter.package_name}}.modules.pagination.pagination_deps import Pagination
+from {{cookiecutter.package_name}}.modules.pagination.pagination_dtos import PaginationOutput
+
+from .users_dtos import SignInOutput, SignUpInput, UserCreate, UserRead
 from .users_models import User
 from .users_service import UsersService
-
+from .users_utils import user_to_user_read
 
 router = InferringRouter(tags=["Users"])
 
@@ -16,20 +19,37 @@ router = InferringRouter(tags=["Users"])
 class UsersController:
     users_service: UsersService = Depends()
 
-    @router.post("/", status_code=201)
-    async def create_user(self, user_create: UserCreate) -> UserRead:
-        user = await self.users_service.create_user(user_create)
-        return await UserRead.from_tortoise_orm(user)
+    @router.post("/sign-up")
+    async def sign_up(self, input_: SignUpInput) -> UserRead:
+        user = await self.users_service.sign_up(input_)
+        return user_to_user_read(user)
 
-    @router.post("/login")
-    async def login(
+    @router.post("/sign-in")
+    async def sign_in(
         self, form_data: OAuth2PasswordRequestForm = Depends()
-    ) -> LoginOutput:
-        result = await self.users_service.login(form_data)
-        return LoginOutput(**result)
+    ) -> SignInOutput:
+        result = await self.users_service.sign_in(form_data)
+        return SignInOutput(**result)
+
+    @router.post("/", status_code=201)
+    async def create_user(
+        self, user_create: UserCreate, _: User = Depends(get_authorized_user)
+    ) -> UserRead:
+        user = await self.users_service.create_user(user_create)
+        return user_to_user_read(user)
+
+    @router.get("/")
+    async def read_users(
+        self,
+        pagin: Pagination[User, UserRead] = Depends(Pagination),
+        _: User = Depends(get_authorized_user),
+    ) -> PaginationOutput[UserRead]:
+        qs = self.users_service.read_users_queryset()
+        result = await pagin.paginate(qs, user_to_user_read)
+        return result
 
     @router.get("/me")
     async def read_current_user(
-        self, user: User = Depends(get_current_active_user)
+        self, user: User = Depends(get_authorized_user)
     ) -> UserRead:
-        return await UserRead.from_tortoise_orm(user)
+        return user_to_user_read(user)

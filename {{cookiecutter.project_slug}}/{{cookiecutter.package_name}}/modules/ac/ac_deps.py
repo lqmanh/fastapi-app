@@ -10,10 +10,10 @@ from {{cookiecutter.package_name}}.modules.users.users_models import User
 
 @lru_cache
 def get_enforcer() -> Enforcer:
-    dirname = path.dirname(__file__)
+    dir_ = path.dirname(__file__)
     return Enforcer(
-        path.join(dirname, "ac_model.conf"),
-        path.join(dirname, "ac_policies.csv"),
+        path.join(dir_, "ac_model.conf"),
+        path.join(dir_, "ac_policies.csv"),
     )
 
 

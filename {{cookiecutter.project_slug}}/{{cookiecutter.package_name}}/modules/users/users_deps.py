@@ -8,7 +8,7 @@ from .users_service import UsersService
 
 async def get_current_user(
     users_service: UsersService = Depends(),
-    token: str = Depends(OAuth2PasswordBearer("/v1/users/login")),
+    token: str = Depends(OAuth2PasswordBearer("/v1/users/sign-in")),
 ) -> User:
     user = await users_service.decode_access_token(token)
     return user

@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Any, Dict, List
+from typing import Any
 
 from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
@@ -11,8 +11,9 @@ from tortoise.queryset import QuerySet
 
 from {{cookiecutter.package_name}}.config import settings
 
-from .users_dtos import UserCreate
+from .users_dtos import SignUpInput, UserCreate
 from .users_models import User
+from .users_types import Role
 
 
 class UsersService:
@@ -26,7 +27,7 @@ class UsersService:
         return self.crypt_ctx.verify(password, password_hash)
 
     def _encode_access_token(self, username: str) -> str:
-        payload: Dict[str, Any] = {"sub": username}
+        payload: dict[str, Any] = {"sub": username}
         exp = settings.jwt_exp_seconds
         if exp > 0:
             payload["exp"] = datetime.utcnow() + timedelta(seconds=exp)
@@ -48,19 +49,14 @@ class UsersService:
                 status_code=401, detail="Could not validate credentials"
             )
 
-    async def create_user(self, user_create: UserCreate) -> User:
-        user_create_dict = user_create.dict()
-        username = user_create_dict.pop("username")
-        password_hash = self._get_password_hash(user_create_dict.pop("password"))
-        user, _ = await User.get_or_create(
-            {**user_create_dict, "password_hash": password_hash}, username=username
+    async def sign_up(self, input_: SignUpInput) -> User:
+        user_create = UserCreate(
+            username=input_.username, password=input_.password, role=Role.NORMAL
         )
+        user = await self.create_user(user_create)
         return user
 
-    def read_users_queryset(self, *, filters: dict = {}) -> QuerySet[User]:
-        return User.filter(**filters)
-
-    async def login(self, form_data: OAuth2PasswordRequestForm) -> Dict[str, str]:
+    async def sign_in(self, form_data: OAuth2PasswordRequestForm) -> dict[str, str]:
         user = await User.get_or_none(username=form_data.username)
 
         if not user or not self._verify_password(
@@ -72,3 +68,15 @@ class UsersService:
         access_token = self._encode_access_token(user.username)
 
         return {"access_token": access_token, "token_type": "bearer"}
+
+    async def create_user(self, user_create: UserCreate) -> User:
+        user_create_dict = user_create.dict()
+        username = user_create_dict.pop("username")
+        password_hash = self._get_password_hash(user_create_dict.pop("password"))
+        user, _ = await User.get_or_create(
+            {**user_create_dict, "password_hash": password_hash}, username=username
+        )
+        return user
+
+    def read_users_queryset(self, *, filters: dict = {}) -> QuerySet[User]:
+        return User.filter(**filters)

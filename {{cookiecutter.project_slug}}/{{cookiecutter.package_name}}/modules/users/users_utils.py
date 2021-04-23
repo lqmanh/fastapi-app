@@ -1,10 +1,12 @@
-def check_username(username: str) -> str:
-    if not 4 <= len(username) <= 32:
-        raise ValueError("must be at least 4 and no more than 32 characters long")
-    return username
+from .users_dtos import UserRead
+from .users_models import User
 
 
-def check_password(password: str) -> str:
-    if not 8 <= len(password) <= 32:
-        raise ValueError("must be at least 8 and no more than 32 characters long")
-    return password
+def user_to_user_read(user: User) -> UserRead:
+    user_read = UserRead(
+        id=user.id,
+        username=user.username,
+        is_active=user.is_active,
+        role=user.role,
+    )
+    return user_read
