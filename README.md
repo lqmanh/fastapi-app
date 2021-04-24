@@ -1,22 +1,24 @@
-# fastapi-app
+# Fastapi-app
 
-An opinionated modular FastAPI app boilerplate inspired by [NestJS](https://nestjs.com).
+Fastapi-app is an opinionated modular FastAPI app boilerplate inspired by [NestJS](https://nestjs.com) and Flask's [Blueprint](https://flask.palletsprojects.com/blueprints). It is suitable for small to medium sized API oriented microservices.
 
 ## Features
 
-- Pre-built user management system with OAuth2 authentication
+- Authentication with OAuth2
+- Access control with [Casbin](https://github.com/casbin/pycasbin)
+- Job scheduling with [APScheduler](https://github.com/agronholm/apscheduler)
+- CLI with [Typer](https://github.com/tiangolo/typer)
 - Built-in pagination support
 - Preconfigured logger
-- Job scheduling with [APScheduler](https://github.com/agronholm/apscheduler)
 
 ## Tech Stack
 
 - Python
 - FastAPI + Uvicorn
 - Tortoise ORM + Aerich
-- Typer
 - Casbin
 - APScheduler
+- Typer
 
 ## Usage
 

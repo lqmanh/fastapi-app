@@ -4,7 +4,7 @@
 
 ## Project Guidelines
 
-See [github:lqmanh/fastapi-app](https://github.com/lqmanh/fastapi-app).
+See https://github.com/lqmanh/fastapi-app.
 
 ## Installation
 
