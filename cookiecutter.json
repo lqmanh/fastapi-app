@@ -10,7 +10,5 @@
   "author_email": "myname@example.com",
 
   "database_driver": [null, "asyncpg", "aiomysql", "asyncmy"],
-  "database_uri": "sqlite://db.sqlite3",
-
-  "jwt_secret": "$3cr3t"
+  "database_uri": "sqlite://db.sqlite3"
 }

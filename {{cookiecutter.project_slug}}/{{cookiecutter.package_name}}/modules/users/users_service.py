@@ -36,15 +36,14 @@ class UsersService:
         )
         return access_token
 
-    async def decode_access_token(self, token: str) -> User:
+    def _decode_access_token(self, token: str) -> str:
         try:
             payload = jwt.decode(
                 token, settings.jwt_secret, algorithms=[ALGORITHMS.HS256]
             )
             username = payload["sub"]
-            user = await User.get(username=username)
-            return user
-        except (JWTError, KeyError, DoesNotExist):
+            return username
+        except (JWTError, KeyError):
             raise HTTPException(
                 status_code=401, detail="Could not validate credentials"
             )
@@ -80,3 +79,13 @@ class UsersService:
 
     def read_users_queryset(self, *, filters: dict = {}) -> QuerySet[User]:
         return User.filter(**filters)
+
+    async def read_user_by_access_token(self, token: str) -> User:
+        try:
+            username = self._decode_access_token(token)
+            user = await User.get(username=username)
+            return user
+        except DoesNotExist:
+            raise HTTPException(
+                status_code=401, detail="Could not validate credentials"
+            )

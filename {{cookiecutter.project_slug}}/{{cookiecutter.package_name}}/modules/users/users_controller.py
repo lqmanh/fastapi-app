@@ -50,6 +50,6 @@ class UsersController:
 
     @router.get("/me")
     async def read_current_user(
-        self, user: User = Depends(get_authorized_user)
+        self, me: User = Depends(get_authorized_user)
     ) -> UserRead:
-        return user_to_user_read(user)
+        return user_to_user_read(me)
