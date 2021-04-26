@@ -26,8 +26,8 @@ class UsersService:
     def _verify_password(self, password: str, password_hash: str) -> bool:
         return self.crypt_ctx.verify(password, password_hash)
 
-    def _encode_access_token(self, username: str) -> str:
-        payload: dict[str, Any] = {"sub": username}
+    def _encode_access_token(self, sub: str) -> str:
+        payload: dict[str, Any] = {"sub": sub}
         exp = settings.jwt_exp_seconds
         if exp > 0:
             payload["exp"] = datetime.utcnow() + timedelta(seconds=exp)
@@ -41,12 +41,10 @@ class UsersService:
             payload = jwt.decode(
                 token, settings.jwt_secret, algorithms=[ALGORITHMS.HS256]
             )
-            username = payload["sub"]
-            return username
+            sub = payload["sub"]
+            return sub
         except (JWTError, KeyError):
-            raise HTTPException(
-                status_code=401, detail="Could not validate credentials"
-            )
+            raise HTTPException(status_code=401, detail="Cannot validate credentials")
 
     async def sign_up(self, input_: SignUpInput) -> User:
         user_create = UserCreate(
@@ -64,8 +62,10 @@ class UsersService:
             raise HTTPException(
                 status_code=401, detail="Incorrect username or password"
             )
-        access_token = self._encode_access_token(user.username)
+        if not user.is_active:
+            raise HTTPException(status_code=403, detail="Inactive user")
 
+        access_token = self._encode_access_token(user.username)
         return {"access_token": access_token, "token_type": "bearer"}
 
     async def create_user(self, user_create: UserCreate) -> User:
@@ -81,11 +81,6 @@ class UsersService:
         return User.filter(**filters)
 
     async def read_user_by_access_token(self, token: str) -> User:
-        try:
-            username = self._decode_access_token(token)
-            user = await User.get(username=username)
-            return user
-        except DoesNotExist:
-            raise HTTPException(
-                status_code=401, detail="Could not validate credentials"
-            )
+        sub = self._decode_access_token(token)
+        user = await User.get(username=sub)
+        return user
