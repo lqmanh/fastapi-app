@@ -1,5 +1,3 @@
-from enum import Enum
-
 from tortoise.fields import DatetimeField, IntField
 from tortoise.models import Model
 
@@ -14,10 +12,3 @@ class TortoiseBaseModel(_TimestampMixin, Model):
 
     class Meta:
         abstract = True
-
-
-class CrudMethod(str, Enum):
-    Create = "create"
-    Read = "read"
-    Update = "update"
-    Delete = "delete"
