@@ -1,17 +1,16 @@
 from datetime import datetime, timedelta
-from typing import Any
+from typing import Any, Union
 
 from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from jose.constants import ALGORITHMS
 from passlib.context import CryptContext
-from tortoise.exceptions import DoesNotExist
 from tortoise.queryset import QuerySet
 
 from {{cookiecutter.package_name}}.config import settings
 
-from .users_dtos import SignUpInput, UserCreate
+from .users_dtos import PasswordUpdate, SignUpInput, UserCreate, UserUpdate
 from .users_models import User
 from .users_types import Role
 
@@ -83,4 +82,33 @@ class UsersService:
     async def read_user_by_access_token(self, token: str) -> User:
         sub = self._decode_access_token(token)
         user = await User.get(username=sub)
+        return user
+
+    async def read_user_by_id(self, id: int) -> User:
+        user = await User.get(id=id)
+        return user
+
+    async def update_user(
+        self, user: Union[User, int], user_update: UserUpdate
+    ) -> User:
+        if isinstance(user, int):
+            user = await self.read_user_by_id(user)
+
+        user.update_from_dict(user_update.dict(exclude_defaults=True))
+        await user.save()
+        return user
+
+    async def update_user_password(
+        self, user: Union[User, int], password_update: PasswordUpdate
+    ) -> User:
+        if isinstance(user, int):
+            user = await self.read_user_by_id(user)
+
+        current_password = password_update.current_password
+        if not self._verify_password(current_password, user.password_hash):
+            raise HTTPException(status_code=401, detail="Incorrect password")
+
+        new_password = password_update.new_password
+        user.password_hash = self._hash_password(new_password)
+        await user.save()
         return user

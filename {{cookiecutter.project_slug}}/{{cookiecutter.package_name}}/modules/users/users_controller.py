@@ -1,4 +1,4 @@
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
@@ -7,7 +7,16 @@ from {{cookiecutter.package_name}}.modules.ac.ac_deps import get_authorized_user
 from {{cookiecutter.package_name}}.modules.pagination.pagination_deps import Pagination
 from {{cookiecutter.package_name}}.modules.pagination.pagination_dtos import PaginationOutput
 
-from .users_dtos import SignInOutput, SignUpInput, UserCreate, UserRead
+from .users_dtos import (
+    PasswordUpdate,
+    SignInOutput,
+    SignUpInput,
+    UserCreate,
+    UserRead,
+    UserUpdate,
+)
+
+from .users_deps import get_current_active_user
 from .users_models import User
 from .users_service import UsersService
 from .users_utils import user_to_user_read
@@ -45,11 +54,52 @@ class UsersController:
         _: User = Depends(get_authorized_user),
     ) -> PaginationOutput[UserRead]:
         qs = self.users_service.read_users_queryset()
-        result = await pagin.paginate(qs, user_to_user_read)
-        return result
+        return await pagin.paginate(qs, user_to_user_read)
+
+    @router.get("/{user_id}")
+    async def read_user(
+        self,
+        user_id: int,
+        me: User = Depends(get_authorized_user),
+    ) -> UserRead:
+        user = await self.users_service.read_user_by_id(user_id)
+        return user_to_user_read(user)
 
     @router.get("/me")
     async def read_current_user(
-        self, me: User = Depends(get_authorized_user)
+        self, me: User = Depends(get_current_active_user)
     ) -> UserRead:
         return user_to_user_read(me)
+
+    @router.patch("/{user_id}")
+    async def update_user(
+        self,
+        user_id: int,
+        user_update: UserUpdate,
+        me: User = Depends(get_authorized_user),
+    ) -> UserRead:
+        user = await self.users_service.update_user(user_id, user_update)
+        return user_to_user_read(user)
+
+    @router.patch("/me")
+    async def update_current_user(
+        self,
+        user_update: UserUpdate,
+        me: User = Depends(get_current_active_user),
+    ) -> UserRead:
+        if user_update.role:
+            raise HTTPException(
+                status_code=403, detail="Users cannot update their role themselves"
+            )
+
+        user = await self.users_service.update_user(me, user_update)
+        return user_to_user_read(user)
+
+    @router.patch("/me/password")
+    async def update_current_user_password(
+        self,
+        password_update: PasswordUpdate,
+        me: User = Depends(get_current_active_user),
+    ) -> UserRead:
+        user = await self.users_service.update_user_password(me, password_update)
+        return user_to_user_read(user)

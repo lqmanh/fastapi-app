@@ -39,3 +39,15 @@ class UserRead(BaseModel):
     username: str
     is_active: bool
     role: Role
+
+
+class UserUpdate(BaseModel):
+    is_active: Optional[bool] = None
+    role: Optional[Role] = None
+
+
+class PasswordUpdate(BaseModel):
+    current_password: str
+    new_password: str
+
+    _check_password = validator("*", allow_reuse=True)(check_password)

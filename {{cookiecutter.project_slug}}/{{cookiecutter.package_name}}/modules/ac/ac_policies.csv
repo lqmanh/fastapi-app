@@ -1,2 +1,1 @@
-p, root, /v1/users/*, (GET)|(POST)|(PUT)|(PATCH)|(DELETE)
-p, normal, /v1/users/me, GET
+p, root, /*, (GET)|(POST)|(PUT)|(PATCH)|(DELETE)
