@@ -52,7 +52,7 @@ class UsersService:
         user = await self.create_user(user_create)
         return user
 
-    async def sign_in(self, form_data: OAuth2PasswordRequestForm) -> dict[str, str]:
+    async def sign_in(self, form_data: OAuth2PasswordRequestForm) -> str:
         user = await User.get_or_none(username=form_data.username)
 
         if not user or not self._verify_password(
@@ -64,8 +64,7 @@ class UsersService:
         if not user.is_active:
             raise HTTPException(status_code=403, detail="Inactive user")
 
-        access_token = self._encode_access_token(user.username)
-        return {"access_token": access_token, "token_type": "bearer"}
+        return self._encode_access_token(user.username)
 
     async def create_user(self, user_create: UserCreate) -> User:
         user_create_dict = user_create.dict()

@@ -32,6 +32,9 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 {{cookiecutter.project_slug}}        # Project root
 ├── {{cookiecutter.package_name}}    # Root module, containing all source code
 │   ├── common                       # Common components
+│   │   ├── validators               # Common validators
+│   │   │   ├── pydantic.py          #
+│   │   │   └── tortoise.py          #
 │   │   ├── types.py                 # Common types, enums,...
 │   │   └── utils.py                 # Common helper functions, decorators,...
 │   ├── modules                      # Where magic happens
@@ -51,7 +54,8 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   │       ├── users_cli.py         # CLI sub-app
 │   │       ├── users_controller.py  # Controller in NestJS, class-based view in Django
 │   │       ├── users_deps.py        # Injectable dependencies
-│   │       ├── users_dtos.py        # DTOs
+│   │       ├── users_dtos.py        # DTOs, view models
+│   │       ├── users_mapper.py      # Mapper that maps domain models to DTOs
 │   │       ├── users_models.py      # Domain models
 │   │       ├── users_service.py     # Business logic, also a special kind of dependencies
 │   │       ├── users_types.py       # Types, enums,...
