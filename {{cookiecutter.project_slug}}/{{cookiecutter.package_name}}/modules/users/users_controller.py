@@ -21,7 +21,7 @@ from .users_mapper import UsersMapper
 from .users_models import User
 from .users_service import UsersService
 
-router = InferringRouter(tags=["Users"])
+router = InferringRouter(tags=["users"])
 
 
 @cbv(router)
