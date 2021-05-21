@@ -57,6 +57,13 @@ class UsersController:
         qs = self.users_service.read_users_queryset()
         return await pagin.paginate(qs, self.users_mapper.to_user_read)
 
+    @router.get("/me")
+    async def read_current_user(
+        self, me: User = Depends(get_current_active_user)
+    ) -> UserRead:
+        return self.users_mapper.to_user_read(me)
+
+
     @router.get("/{user_id}")
     async def read_user(
         self,
@@ -64,22 +71,6 @@ class UsersController:
         me: User = Depends(get_authorized_user),
     ) -> UserRead:
         user = await self.users_service.read_user_by_id(user_id)
-        return self.users_mapper.to_user_read(user)
-
-    @router.get("/me")
-    async def read_current_user(
-        self, me: User = Depends(get_current_active_user)
-    ) -> UserRead:
-        return self.users_mapper.to_user_read(me)
-
-    @router.patch("/{user_id}")
-    async def update_user(
-        self,
-        user_id: int,
-        user_update: UserUpdate,
-        me: User = Depends(get_authorized_user),
-    ) -> UserRead:
-        user = await self.users_service.update_user(user_id, user_update)
         return self.users_mapper.to_user_read(user)
 
     @router.patch("/me")
@@ -95,6 +86,17 @@ class UsersController:
 
         user = await self.users_service.update_user(me, user_update)
         return self.users_mapper.to_user_read(user)
+
+    @router.patch("/{user_id}")
+    async def update_user(
+        self,
+        user_id: int,
+        user_update: UserUpdate,
+        me: User = Depends(get_authorized_user),
+    ) -> UserRead:
+        user = await self.users_service.update_user(user_id, user_update)
+        return self.users_mapper.to_user_read(user)
+
 
     @router.patch("/me/password")
     async def update_current_user_password(

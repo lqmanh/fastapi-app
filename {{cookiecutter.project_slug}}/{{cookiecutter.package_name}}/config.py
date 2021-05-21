@@ -1,10 +1,7 @@
 from types import ModuleType
 from typing import Tuple
 
-import aerich.models
 from pydantic import BaseSettings
-
-from {{cookiecutter.package_name}}.modules.users import users_models
 
 
 class Settings(BaseSettings):
@@ -20,7 +17,10 @@ class Settings(BaseSettings):
 
     @property
     def tortoise_orm_model_modules(self) -> Tuple[ModuleType]:
-        return (users_models, aerich.models)
+        import aerich.models
+        from {{cookiecutter.package_name}}.modules.users import users_models
+
+        return (aerich.models, users_models)
 
     @property
     def tortoise_orm_config(self) -> dict:
@@ -34,6 +34,10 @@ class Settings(BaseSettings):
                 }
             },
         }
+
+    @property
+    def default_token_url(self) -> str:
+        return f"{self.root_path}/v1/users/sign-in"
 
 
 settings = Settings()
