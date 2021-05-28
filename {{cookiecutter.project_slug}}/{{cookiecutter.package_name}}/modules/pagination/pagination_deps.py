@@ -1,5 +1,6 @@
 import asyncio
-from typing import Callable, Generic, Iterable, Optional
+from inspect import iscoroutinefunction
+from typing import Any, Callable, Coroutine, Generic, Iterable, Optional, Union
 
 from fastapi import Query
 from tortoise.queryset import QuerySet
@@ -29,7 +30,6 @@ class Pagination(Generic[MT, PT]):
         else:
             self.orderby = []
 
-
     def to_pagination_output(
         self, total: int, data: Iterable[PT]
     ) -> PaginationOutput[PT]:
@@ -42,10 +42,18 @@ class Pagination(Generic[MT, PT]):
         )
 
     async def paginate(
-        self, queryset: QuerySet[MT], mapper: Callable[[MT], PT]
+        self,
+        queryset: QuerySet[MT],
+        mapper: Callable[[MT], Union[PT, Coroutine[Any, Any, PT]]],
     ) -> PaginationOutput[PT]:
         total, data = await asyncio.gather(
             queryset.count(),
             queryset.limit(self.limit).offset(self.offset).order_by(*self.orderby),
         )
-        return self.to_pagination_output(total, map(mapper, data))
+
+        if iscoroutinefunction(mapper):
+            output_data = await asyncio.gather(*map(mapper, data))
+        else:
+            output_data = map(mapper, data)
+
+        return self.to_pagination_output(total, output_data)
