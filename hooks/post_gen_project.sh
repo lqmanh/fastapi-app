@@ -25,7 +25,8 @@ poetry add \
 poetry add \
     rtoml \
     casbin \
-    apscheduler
+    apscheduler \
+    spinach
 
 # Install dev dependencies
 poetry add --dev \

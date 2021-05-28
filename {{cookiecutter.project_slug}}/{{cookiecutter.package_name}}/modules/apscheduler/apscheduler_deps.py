@@ -10,7 +10,4 @@ def get_scheduler() -> AsyncIOScheduler:
         jobstore_retry_interval=60,
         job_defaults={"coalesce": True, "replace_existing": True},
     )
-
-    scheduler.start()
-
     return scheduler

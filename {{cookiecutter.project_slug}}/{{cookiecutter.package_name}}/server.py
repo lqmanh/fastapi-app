@@ -7,7 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
 from {{cookiecutter.package_name}}.config import settings
-from {{cookiecutter.package_name}}.modules.scheduler.scheduler_deps import get_scheduler
+from {{cookiecutter.package_name}}.modules.apscheduler.apscheduler_deps import get_scheduler
+from {{cookiecutter.package_name}}.modules.spinach.spinach_deps import get_spinach
 from {{cookiecutter.package_name}}.modules.users import users_controller
 
 
@@ -27,13 +28,20 @@ app = FastAPI(
 #
 @app.on_event("startup")
 def on_startup():
-    pass
+    scheduler = get_scheduler()
+    scheduler.start()
+
+    spin = get_spinach()
+    spin.start_workers(block=False)
 
 
 @app.on_event("shutdown")
 def on_shutdown():
     scheduler = get_scheduler()
     scheduler.shutdown()
+
+    spin = get_spinach()
+    spin.stop_workers()
 
 
 #

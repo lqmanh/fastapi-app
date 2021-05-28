@@ -6,7 +6,7 @@ Fastapi-app is an opinionated modular FastAPI app boilerplate inspired by [NestJ
 
 - Authentication with OAuth2
 - Access control with [Casbin](https://github.com/casbin/pycasbin)
-- Job scheduling with [APScheduler](https://github.com/agronholm/apscheduler)
+- Job scheduling with [APScheduler](https://github.com/agronholm/apscheduler) or [Spinach](https://github.com/NicolasLM/spinach)
 - CLI with [Typer](https://github.com/tiangolo/typer)
 - Built-in pagination support
 - Preconfigured logger
@@ -17,7 +17,7 @@ Fastapi-app is an opinionated modular FastAPI app boilerplate inspired by [NestJ
 - FastAPI + Uvicorn
 - Tortoise ORM + Aerich
 - Casbin
-- APScheduler
+- APScheduler/Spinach
 - Typer
 
 ## Usage
@@ -42,14 +42,16 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   │   │   ├── ac_deps.py           #
 │   │   │   ├── ac_model.conf        # Access control model
 │   │   │   └── ac_policies.csv      # Policies
+│   │   ├── apscheduler              # APScheduler module
+│   │   │   └── apscheduler_deps.py  #
 │   │   ├── logging                  # Logging module
 │   │   │   └── logging_deps.py      #
 │   │   ├── pagination               # Pagination module
 │   │   │   ├── pagination_deps.py   #
 │   │   │   ├── pagination_dtos.py   #
 │   │   │   └── pagination_types.py  #
-│   │   ├── scheduler                # Job scheduler module
-│   │   │   └── scheduler_deps.py    #
+│   │   ├── spinach                  # Spinach module
+│   │   │   └── spinach_deps.py      #
 │   │   └── users                    # User management module
 │   │       ├── users_cli.py         # CLI sub-app
 │   │       ├── users_controller.py  # Controller in NestJS, class-based view in Django
