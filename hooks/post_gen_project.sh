@@ -25,8 +25,7 @@ poetry add \
 poetry add \
     rtoml \
     casbin \
-    apscheduler \
-    spinach
+    {% if cookiecutter.job_scheduler %} {{cookiecutter.job_scheduler}} {% endif %}
 
 # Install dev dependencies
 poetry add --dev \
@@ -35,5 +34,8 @@ poetry add --dev \
     pyflakes \
     black
 
+# Remove unused modules
+{% if cookiecutter.job_scheduler != "apscheduler" %} rm -r {{cookiecutter.package_name}}/modules/apscheduler {% endif %}
+{% if cookiecutter.job_scheduler != "spinach" %} rm -r {{cookiecutter.package_name}}/modules/spinach {% endif %}
 
 git init && git add . && git commit -m 'Initial commit. Bootstrap project'

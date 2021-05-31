@@ -10,5 +10,7 @@
   "author_email": "myname@example.com",
 
   "database_driver": [null, "asyncpg", "aiomysql", "asyncmy"],
-  "database_uri": "sqlite://db.sqlite3"
+  "database_uri": "sqlite://db.sqlite3",
+
+  "job_scheduler": [null, "apscheduler", "spinach"]
 }
