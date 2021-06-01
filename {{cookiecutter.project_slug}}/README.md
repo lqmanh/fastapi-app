@@ -21,12 +21,6 @@ See https://github.com/lqmanh/fastapi-app.
 $ poetry install
 ```
 
-### Export dependencies to `requirements.txt`
-
-```sh
-$ poetry export -f requirements.txt -o requirements.txt --without-hashes
-```
-
 ## Usage
 
 ### Run apps

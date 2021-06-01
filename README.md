@@ -60,8 +60,7 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   │       ├── users_mapper.py      # Mapper that maps domain models to DTOs
 │   │       ├── users_models.py      # Domain models
 │   │       ├── users_service.py     # Business logic, also a special kind of dependencies
-│   │       ├── users_types.py       # Types, enums,...
-│   │       └── users_utils.py       # Helper functions, decorators,...
+│   │       └── users_types.py       # Types, enums,...
 │   ├── cli.py                       # Root CLI app
 │   ├── config.py                    # Global configurations
 │   └── server.py                    # HTTP server
