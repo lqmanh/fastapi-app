@@ -23,7 +23,7 @@ def get_authorized_user(
     me: User = Depends(get_current_active_user),
 ) -> User:
     sub = me.role
-    obj = req.url.path
+    obj = req.url.path.removeprefix(settings.root_path).rstrip("/")
     act = req.method
     if enforcer.enforce(sub, obj, act):
         return me
