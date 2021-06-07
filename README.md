@@ -32,9 +32,6 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 {{cookiecutter.project_slug}}        # Project root
 ├── {{cookiecutter.package_name}}    # Root module, containing all source code
 │   ├── common                       # Common components
-│   │   ├── validators               # Common validators
-│   │   │   ├── pydantic.py          #
-│   │   │   └── tortoise.py          #
 │   │   ├── types.py                 # Common types, enums,...
 │   │   └── utils.py                 # Common helper functions, decorators,...
 │   ├── modules                      # Where magic happens
