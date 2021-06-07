@@ -4,6 +4,7 @@ from os import path
 from casbin import Enforcer
 from fastapi import Depends, HTTPException, Request
 
+from {{cookiecutter.package_name}}.config import settings
 from {{cookiecutter.package_name}}.modules.users.users_deps import get_current_active_user
 from {{cookiecutter.package_name}}.modules.users.users_models import User
 
