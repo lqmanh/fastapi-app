@@ -30,8 +30,9 @@ poetry add \
 # Install dev dependencies
 poetry add --dev \
     pytest \
+    pytest-asyncio \
+    mypy \
     pylint \
-    pyflakes \
     black
 
 # Remove unused modules

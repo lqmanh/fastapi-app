@@ -1,5 +1,4 @@
 from types import ModuleType
-from typing import Tuple
 
 from pydantic import BaseSettings
 
@@ -16,7 +15,7 @@ class Settings(BaseSettings):
         env_file = ".env.example"
 
     @property
-    def tortoise_orm_model_modules(self) -> Tuple[ModuleType]:
+    def tortoise_orm_model_modules(self) -> tuple[ModuleType, ...]:
         import aerich.models
         from {{cookiecutter.package_name}}.modules.users import users_models
 

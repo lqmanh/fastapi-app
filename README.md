@@ -4,21 +4,14 @@ Fastapi-app is an opinionated modular FastAPI app boilerplate inspired by [NestJ
 
 ## Features
 
+- ASGI server with [Uvicorn](https://github.com/encode/uvicorn)
+- Active record ORM with [Tortoise](https://github.com/tortoise/tortoise-orm) and database migration with [Aerich](https://github.com/tortoise/aerich)
 - Authentication with OAuth2
 - Access control with [Casbin](https://github.com/casbin/pycasbin)
 - Job scheduling with [APScheduler](https://github.com/agronholm/apscheduler) or [Spinach](https://github.com/NicolasLM/spinach)
 - CLI with [Typer](https://github.com/tiangolo/typer)
 - Built-in pagination support
 - Preconfigured logger
-
-## Tech Stack
-
-- Python
-- FastAPI + Uvicorn
-- Tortoise ORM + Aerich
-- Casbin
-- APScheduler/Spinach
-- Typer
 
 ## Usage
 

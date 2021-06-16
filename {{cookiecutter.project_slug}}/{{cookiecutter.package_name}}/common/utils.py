@@ -1,16 +1,21 @@
 import asyncio
 import functools
-from typing import Callable
+from typing import Callable, Coroutine
 
 from tortoise import Tortoise
 
 from {{cookiecutter.package_name}}.config import settings
 
 
-def _coro_wrapper(f: Callable):
+def _coro_wrapper(f: Callable[..., Coroutine]):
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
-        return asyncio.run(f(*args, **kwargs))
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            return asyncio.run(f(*args, **kwargs))
+        else:
+            loop.run_until_complete(f(*args, **kwargs))
 
     return wrapper
 
