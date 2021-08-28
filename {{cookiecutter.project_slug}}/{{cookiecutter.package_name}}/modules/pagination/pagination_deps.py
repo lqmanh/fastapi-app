@@ -3,6 +3,7 @@ from inspect import iscoroutinefunction
 from typing import Any, Callable, Coroutine, Generic, Iterable, Optional, Union
 
 from fastapi import Query
+from fastapi_module import enhanced_cbd
 from tortoise.queryset import QuerySet
 
 from {{cookiecutter.package_name}}.config import settings
@@ -11,24 +12,16 @@ from .pagination_dtos import PaginationOutput
 from .pagination_types import MT, PT
 
 
+@enhanced_cbd
 class Pagination(Generic[MT, PT]):
-    max_limit = settings.pagination_max_limit
-    limit: int
-    offset: int
-    orderby: list[str]
+    limit: int = Query(10, ge=1, le=settings.pagination_max_limit)
+    offset: int = Query(0, ge=0)
 
     def __init__(
         self,
-        limit: int = Query(10, ge=1, le=settings.pagination_max_limit),
-        offset: int = Query(0, ge=0),
         orderby: Optional[str] = Query(None, description='Format: "id,-updated_at"'),
     ):
-        self.limit = limit
-        self.offset = offset
-        if orderby:
-            self.orderby = orderby.split(",")
-        else:
-            self.orderby = []
+        self.orderby = orderby.split(",") if orderby else []
 
     def to_pagination_output(
         self, total: int, data: Iterable[PT]

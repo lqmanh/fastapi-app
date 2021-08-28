@@ -10,7 +10,7 @@ poetry add \
     passlib[bcrypt]
 
 # As currently the official fastapi-utils is not very active, we use a custom fork
-poetry add git+https://github.com/lqmanh/fastapi-utils.git#detached
+poetry add git+https://github.com/lqmanh/fastapi-module.git#v0.2.0
 
 # Install Typer dependencies
 poetry add \

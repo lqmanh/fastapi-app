@@ -12,7 +12,7 @@ from {{cookiecutter.package_name}}.modules.apscheduler.apscheduler_deps import g
 {% elif cookiecutter.job_scheduler == "spinach" -%}
 from {{cookiecutter.package_name}}.modules.spinach.spinach_deps import get_spinach
 {%- endif %}
-from {{cookiecutter.package_name}}.modules.users import users_controller
+from {{cookiecutter.package_name}}.modules.users.users_module import UsersModule
 
 
 pyproject = rtoml.load(Path(__file__).parent.joinpath("../pyproject.toml"))
@@ -77,7 +77,7 @@ app.add_middleware(
 #
 # register all routers here
 #
-app.include_router(users_controller.router, prefix="/v1/users")
+app.include_router(UsersModule.router, prefix="/v1/users")
 
 
 #

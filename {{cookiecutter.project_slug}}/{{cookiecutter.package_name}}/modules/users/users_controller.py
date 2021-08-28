@@ -1,7 +1,6 @@
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi_utils.cbv import cbv
-from fastapi_utils.inferring_router import InferringRouter
+from fastapi_module import InferringRouter, controller
 
 from {{cookiecutter.package_name}}.modules.ac.ac_deps import get_authorized_user
 from {{cookiecutter.package_name}}.modules.pagination.pagination_deps import Pagination
@@ -24,7 +23,7 @@ from .users_service import UsersService
 router = InferringRouter(tags=["users"])
 
 
-@cbv(router)
+@controller(router)
 class UsersController:
     users_service: UsersService = Depends()
     users_mapper: UsersMapper = Depends()

@@ -16,8 +16,7 @@ from .users_types import Role
 
 
 class UsersService:
-    def __init__(self):
-        self.crypt_ctx = CryptContext(schemes=["bcrypt"])
+    crypt_ctx = CryptContext(schemes=["bcrypt"])
 
     def _get_password_hash(self, password: str) -> str:
         return self.crypt_ctx.hash(password)
