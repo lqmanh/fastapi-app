@@ -25,8 +25,9 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 {{cookiecutter.project_slug}}        # Project root
 ├── {{cookiecutter.package_name}}    # Root module, containing all source code
 │   ├── common                       # Common components
-│   │   ├── types.py                 # Common types, enums,...
-│   │   └── utils.py                 # Common helper functions, decorators,...
+│   │   ├── constants.py             # Constants
+│   │   ├── types.py                 # Types, enums,...
+│   │   └── utils.py                 # Helper functions, decorators,...
 │   ├── modules                      # Where magic happens
 │   │   ├── ac                       # Access control module
 │   │   │   ├── ac_deps.py           #
@@ -49,6 +50,7 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   │       ├── users_dtos.py        # DTOs, view models
 │   │       ├── users_mapper.py      # Mapper that maps domain models to DTOs
 │   │       ├── users_models.py      # Domain models
+│   │       ├── users_module.py      # Module class
 │   │       ├── users_service.py     # Business logic, also a special kind of dependencies
 │   │       └── users_types.py       # Types, enums,...
 │   ├── cli.py                       # Root CLI app

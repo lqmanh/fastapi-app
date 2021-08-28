@@ -13,7 +13,9 @@ python = "^3.9"
 [tool.poetry.scripts]
 {{cookiecutter.cli}} = "{{cookiecutter.package_name}}.cli:app"
 
+[tool.black]
+line-length = 90
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

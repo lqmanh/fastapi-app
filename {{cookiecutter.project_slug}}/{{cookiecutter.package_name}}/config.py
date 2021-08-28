@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     @property
     def tortoise_orm_model_modules(self) -> tuple[ModuleType, ...]:
         import aerich.models
+
         from {{cookiecutter.package_name}}.modules.users import users_models
 
         return (aerich.models, users_models)
