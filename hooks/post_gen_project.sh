@@ -32,7 +32,6 @@ poetry add --dev \
     pytest \
     pytest-asyncio \
     mypy \
-    pylint \
     black
 
 # Remove unused modules
