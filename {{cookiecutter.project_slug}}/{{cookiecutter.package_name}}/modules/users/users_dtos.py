@@ -31,7 +31,7 @@ class SignInOutput(BaseModel):
 
 
 class UserCreate(SignUpInput):
-    role: Optional[Role] = Role.NORMAL
+    role: Role
 
 
 class UserRead(BaseModel):

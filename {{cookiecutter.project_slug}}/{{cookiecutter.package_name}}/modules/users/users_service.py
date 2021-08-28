@@ -18,7 +18,7 @@ from .users_types import Role
 class UsersService:
     crypt_ctx = CryptContext(schemes=["bcrypt"])
 
-    def _get_password_hash(self, password: str) -> str:
+    def _hash_password(self, password: str) -> str:
         return self.crypt_ctx.hash(password)
 
     def _verify_password(self, password: str, password_hash: str) -> bool:
@@ -46,7 +46,7 @@ class UsersService:
 
     async def sign_up(self, input_: SignUpInput) -> User:
         user_create = UserCreate(
-            username=input_.username, password=input_.password, role=Role.NORMAL
+            username=input_.username, password=input_.password, role=Role.END_USER
         )
         user = await self.create_user(user_create)
         return user
@@ -54,12 +54,8 @@ class UsersService:
     async def sign_in(self, form_data: OAuth2PasswordRequestForm) -> str:
         user = await User.get_or_none(username=form_data.username)
 
-        if not user or not self._verify_password(
-            form_data.password, user.password_hash
-        ):
-            raise HTTPException(
-                status_code=401, detail="Incorrect username or password"
-            )
+        if not user or not self._verify_password(form_data.password, user.password_hash):
+            raise HTTPException(status_code=401, detail="Incorrect username or password")
         if not user.is_active:
             raise HTTPException(status_code=403, detail="Inactive user")
 
@@ -68,7 +64,7 @@ class UsersService:
     async def create_user(self, user_create: UserCreate) -> User:
         user_create_dict = user_create.dict()
         username = user_create_dict.pop("username")
-        password_hash = self._get_password_hash(user_create_dict.pop("password"))
+        password_hash = self._hash_password(user_create_dict.pop("password"))
         user, _ = await User.get_or_create(
             {**user_create_dict, "password_hash": password_hash}, username=username
         )
@@ -86,9 +82,7 @@ class UsersService:
         user = await User.get(id=id)
         return user
 
-    async def update_user(
-        self, user: Union[User, int], user_update: UserUpdate
-    ) -> User:
+    async def update_user(self, user: Union[User, int], user_update: UserUpdate) -> User:
         if isinstance(user, int):
             user = await self.read_user_by_id(user)
 

@@ -6,6 +6,7 @@ from {{cookiecutter.package_name}}.modules.ac.ac_deps import get_authorized_user
 from {{cookiecutter.package_name}}.modules.pagination.pagination_deps import Pagination
 from {{cookiecutter.package_name}}.modules.pagination.pagination_dtos import PaginationOutput
 
+from .users_deps import get_current_active_user
 from .users_dtos import (
     PasswordUpdate,
     SignInOutput,
@@ -14,8 +15,6 @@ from .users_dtos import (
     UserRead,
     UserUpdate,
 )
-
-from .users_deps import get_current_active_user
 from .users_mapper import UsersMapper
 from .users_models import User
 from .users_service import UsersService
@@ -51,7 +50,7 @@ class UsersController:
     async def read_users(
         self,
         pagin: Pagination[User, UserRead] = Depends(Pagination),
-        _: User = Depends(get_authorized_user),
+        me: User = Depends(get_authorized_user),
     ) -> PaginationOutput[UserRead]:
         qs = self.users_service.read_users_queryset()
         return await pagin.paginate(qs, self.users_mapper.to_user_read)
@@ -61,7 +60,6 @@ class UsersController:
         self, me: User = Depends(get_current_active_user)
     ) -> UserRead:
         return self.users_mapper.to_user_read(me)
-
 
     @router.get("/{user_id}")
     async def read_user(
@@ -95,7 +93,6 @@ class UsersController:
     ) -> UserRead:
         user = await self.users_service.update_user(user_id, user_update)
         return self.users_mapper.to_user_read(user)
-
 
     @router.patch("/me/password")
     async def update_current_user_password(

@@ -10,7 +10,7 @@ from .users_service import UsersService
 
 async def get_current_user(
     users_service: UsersService = Depends(),
-    token: str = Depends(OAuth2PasswordBearer(settings.default_token_url)),
+    token: str = Depends(OAuth2PasswordBearer(settings.token_url)),
 ) -> User:
     me = await users_service.read_user_by_access_token(token)
     return me
@@ -18,5 +18,5 @@ async def get_current_user(
 
 async def get_current_active_user(me: User = Depends(get_current_user)) -> User:
     if not me.is_active:
-        raise HTTPException(status_code=403, detail="Inactive user")
+        raise HTTPException(status_code=400, detail="Inactive user")
     return me

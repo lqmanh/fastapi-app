@@ -39,7 +39,7 @@ class Settings(BaseSettings):
         }
 
     @property
-    def default_token_url(self) -> str:
+    def token_url(self) -> str:
         return f"{self.root_path}/v1/users/sign-in"
 
 

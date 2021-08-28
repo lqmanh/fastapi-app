@@ -1,1 +1,4 @@
 p, root, /*, (GET)|(POST)|(PUT)|(PATCH)|(DELETE)
+
+p, admin, /v1/users, (GET)|(POST)
+p, admin, /v1/users/*, (GET)|(PATCH)

@@ -9,17 +9,17 @@ from .users_types import Role
 
 app = Typer()
 
+users_service = UsersService()
+
 
 @app.command()
 @cli_wrapper
 async def create(
     username: str,
-    role: Role = Role.NORMAL,
+    role: Role,
     password: str = Option(..., prompt=True, confirmation_prompt=True),
 ):
     """Create an user."""
-    users_service = UsersService()
-
     try:
         user_create = UserCreate(username=username, password=password, role=role)
         user = await users_service.create_user(user_create)

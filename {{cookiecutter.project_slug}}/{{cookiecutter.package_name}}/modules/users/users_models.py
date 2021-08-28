@@ -6,10 +6,10 @@ from .users_types import Role
 
 
 class User(TortoiseBaseModel):
-    username = CharField(64, unique=True)
-    password_hash = CharField(255)
     is_active = BooleanField(default=True)
-    role = CharEnumField(Role, max_length=255)
+    password_hash: str = CharField(255)
+    role: Role = CharEnumField(Role, max_length=255)
+    username: str = CharField(255, unique=True)
 
     class Meta:
         table = "users"
