@@ -16,7 +16,6 @@ from {{cookiecutter.package_name}}.modules.users.users_module import UsersModule
 
 
 pyproject = rtoml.load(Path(__file__).parent.joinpath("../pyproject.toml"))
-
 app = FastAPI(
     debug=not settings.python_env.startswith("prod"),
     title=pyproject["tool"]["poetry"]["name"],
@@ -77,7 +76,7 @@ app.add_middleware(
 #
 # register all routers here
 #
-app.include_router(UsersModule.router, prefix="/v1/users")
+app.include_router(UsersModule.router)
 
 
 #
@@ -99,4 +98,5 @@ if __name__ == "__main__":
         "{{cookiecutter.package_name}}.server:app",
         host="0.0.0.0",
         reload=not settings.python_env.startswith("prod"),
+        reload_dirs=["{{cookiecutter.package_name}}"],
     )

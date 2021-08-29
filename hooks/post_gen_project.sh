@@ -5,7 +5,7 @@ poetry add \
     uvicorn[standard] \
     fastapi \
     pydantic[dotenv] \
-    git+https://github.com/lqmanh/fastapi-module.git#v0.2.0 \
+    git+https://github.com/lqmanh/fastapi-module.git#8955a06 \
     python-multipart \
     python-jose[cryptography] \
     passlib[bcrypt]

@@ -22,7 +22,7 @@ from .users_service import UsersService
 router = InferringRouter(tags=["users"])
 
 
-@controller(router)
+@controller(router, version=1)
 class UsersController:
     users_service: UsersService = Depends()
     users_mapper: UsersMapper = Depends()
