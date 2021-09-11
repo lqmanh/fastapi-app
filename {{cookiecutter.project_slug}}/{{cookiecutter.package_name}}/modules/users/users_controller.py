@@ -6,7 +6,7 @@ from {{cookiecutter.package_name}}.modules.ac.ac_deps import get_authorized_user
 from {{cookiecutter.package_name}}.modules.pagination.pagination_deps import Pagination
 from {{cookiecutter.package_name}}.modules.pagination.pagination_dtos import PaginationOutput
 
-from .users_deps import get_current_active_user
+from .users_deps import get_current_user
 from .users_dtos import (
     PasswordUpdate,
     SignInOutput,
@@ -57,7 +57,7 @@ class UsersController:
 
     @router.get("/me")
     async def read_current_user(
-        self, me: User = Depends(get_current_active_user)
+        self, me: User = Depends(get_current_user)
     ) -> UserRead:
         return self.users_mapper.to_user_read(me)
 
@@ -74,7 +74,7 @@ class UsersController:
     async def update_current_user(
         self,
         user_update: UserUpdate,
-        me: User = Depends(get_current_active_user),
+        me: User = Depends(get_current_user),
     ) -> UserRead:
         if user_update.role:
             raise HTTPException(
@@ -98,7 +98,7 @@ class UsersController:
     async def update_current_user_password(
         self,
         password_update: PasswordUpdate,
-        me: User = Depends(get_current_active_user),
+        me: User = Depends(get_current_user),
     ) -> UserRead:
         user = await self.users_service.update_user_password(me, password_update)
         return self.users_mapper.to_user_read(user)

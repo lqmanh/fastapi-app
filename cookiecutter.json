@@ -9,6 +9,8 @@
   "author_name": "My Name",
   "author_email": "myname@example.com",
 
+  "env_file": ".env",
+
   "database_driver": [null, "asyncpg", "aiomysql", "asyncmy"],
   "database_uri": "sqlite://db.sqlite3",
 

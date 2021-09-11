@@ -9,19 +9,19 @@ from tortoise.queryset import QuerySet
 from {{cookiecutter.package_name}}.config import settings
 
 from .pagination_dtos import PaginationOutput
-from .pagination_types import MT, PT
+from .pagination_types import TT, PT
 
 
 @enhanced_cbd
-class Pagination(Generic[MT, PT]):
+class Pagination(Generic[TT, PT]):
     limit: int = Query(10, ge=1, le=settings.pagination_max_limit)
     offset: int = Query(0, ge=0)
 
     def __init__(
         self,
-        orderby: Optional[str] = Query(None, description='Format: "id,-updated_at"'),
+        order: Optional[str] = Query(None, description='Format: "id,-updated_at"'),
     ):
-        self.orderby = orderby.split(",") if orderby else []
+        self.order = order.split(",") if order else []
 
     def to_pagination_output(
         self, total: int, data: Iterable[PT]
@@ -30,18 +30,18 @@ class Pagination(Generic[MT, PT]):
             total=total,
             limit=self.limit,
             offset=self.offset,
-            orderby=self.orderby,
+            order=self.order,
             data=list(data),
         )
 
     async def paginate(
         self,
-        queryset: QuerySet[MT],
-        mapper: Callable[[MT], Union[PT, Coroutine[Any, Any, PT]]],
+        queryset: QuerySet[TT],
+        mapper: Callable[[TT], Union[PT, Coroutine[Any, Any, PT]]],
     ) -> PaginationOutput[PT]:
         total, data = await asyncio.gather(
             queryset.count(),
-            queryset.limit(self.limit).offset(self.offset).order_by(*self.orderby),
+            queryset.limit(self.limit).offset(self.offset).order_by(*self.order),
         )
 
         if iscoroutinefunction(mapper):

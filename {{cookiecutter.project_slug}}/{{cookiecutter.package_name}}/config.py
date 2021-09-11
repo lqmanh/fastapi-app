@@ -4,6 +4,9 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
+    class Config:
+        env_file = "{{cookiecutter.env_file}}"
+
     python_env: str = "dev"
     root_path: str = ""
 
@@ -13,9 +16,6 @@ class Settings(BaseSettings):
     jwt_exp_seconds: int = -1  # no EXP
 
     pagination_max_limit: int = 100
-
-    class Config:
-        env_file = ".env.example"
 
     @property
     def tortoise_orm_model_modules(self) -> tuple[ModuleType, ...]:

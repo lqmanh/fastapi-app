@@ -1,9 +1,7 @@
 from typing import TypeVar
 
-from pydantic import BaseModel
+from {{cookiecutter.package_name}}.common.types import PydanticModel, TortoiseModel
 
-from {{cookiecutter.package_name}}.common.types import TortoiseBaseModel
+TT = TypeVar("TT", bound=TortoiseModel)
 
-MT = TypeVar("MT", bound=TortoiseBaseModel)
-
-PT = TypeVar("PT", bound=BaseModel)
+PT = TypeVar("PT", bound=PydanticModel)

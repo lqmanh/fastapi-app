@@ -56,8 +56,6 @@ class UsersService:
 
         if not user or not self._verify_password(form_data.password, user.password_hash):
             raise HTTPException(status_code=401, detail="Incorrect username or password")
-        if not user.is_active:
-            raise HTTPException(status_code=403, detail="Inactive user")
 
         return self._encode_access_token(user.username)
 

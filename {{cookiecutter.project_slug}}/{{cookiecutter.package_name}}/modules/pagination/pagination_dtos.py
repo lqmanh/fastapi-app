@@ -9,5 +9,5 @@ class PaginationOutput(GenericModel, Generic[PT]):
     total: int
     limit: int
     offset: int
-    orderby: list[str]
+    order: list[str]
     data: list[PT]

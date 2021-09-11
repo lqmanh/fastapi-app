@@ -12,6 +12,7 @@ from {{cookiecutter.package_name}}.modules.apscheduler.apscheduler_deps import g
 {% elif cookiecutter.job_scheduler == "spinach" -%}
 from {{cookiecutter.package_name}}.modules.spinach.spinach_deps import get_spinach
 {%- endif %}
+from {{cookiecutter.package_name}}.modules.meta.meta_module import MetaModule
 from {{cookiecutter.package_name}}.modules.users.users_module import UsersModule
 
 
@@ -57,11 +58,7 @@ def on_shutdown():
 #
 # register all middlewares & other stuff here
 #
-register_tortoise(
-    app,
-    settings.tortoise_orm_config,
-    add_exception_handlers=not settings.python_env.startswith("prod"),
-)
+register_tortoise(app, settings.tortoise_orm_config)
 
 app.add_middleware(
     CORSMiddleware,
@@ -76,21 +73,8 @@ app.add_middleware(
 #
 # register all routers here
 #
+app.include_router(MetaModule.router)
 app.include_router(UsersModule.router)
-
-
-#
-# register all metadata routes here
-#
-@app.get("/ping")
-def pong(req: Request) -> dict:
-    return {
-        "message": "PONG",
-        "environment": settings.python_env,
-        "root_path": req.scope.get("root_path"),
-        "build_revision": pyproject["tool"]["poetry"]["version"],
-        "project": pyproject,
-    }
 
 
 if __name__ == "__main__":

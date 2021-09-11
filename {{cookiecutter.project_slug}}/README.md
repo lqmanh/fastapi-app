@@ -13,7 +13,7 @@ See https://github.com/lqmanh/fastapi-app.
 - Python >= 3.9
 - Poetry >= 1
 - SQLite/PostgreSQL/MySQL/MariaDB
-- [Environment variables](.env.example)
+- [Environment variables]({{cookiecutter.env_file}})
 
 ### Instructions
 

@@ -1,6 +1,8 @@
 from typing import Optional
 
-from pydantic import BaseModel, validator
+from pydantic import validator
+
+from {{cookiecutter.package_name}}.common.types import PydanticModel
 
 from .users_types import Role
 
@@ -17,7 +19,7 @@ def check_password(password: str) -> str:
     return password
 
 
-class SignUpInput(BaseModel):
+class SignUpInput(PydanticModel):
     username: str
     password: str
 
@@ -25,7 +27,7 @@ class SignUpInput(BaseModel):
     _check_password = validator("password", allow_reuse=True)(check_password)
 
 
-class SignInOutput(BaseModel):
+class SignInOutput(PydanticModel):
     access_token: str
     token_type: str
 
@@ -34,19 +36,17 @@ class UserCreate(SignUpInput):
     role: Role
 
 
-class UserRead(BaseModel):
+class UserRead(PydanticModel):
     id: int
     username: str
-    is_active: bool
     role: Role
 
 
-class UserUpdate(BaseModel):
-    is_active: Optional[bool] = None
+class UserUpdate(PydanticModel):
     role: Optional[Role] = None
 
 
-class PasswordUpdate(BaseModel):
+class PasswordUpdate(PydanticModel):
     current_password: str
     new_password: str
 

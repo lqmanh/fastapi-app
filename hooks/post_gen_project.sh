@@ -36,4 +36,4 @@ poetry add --dev \
 {% if cookiecutter.job_scheduler != "apscheduler" %} rm -r {{cookiecutter.package_name}}/modules/apscheduler {% endif %}
 {% if cookiecutter.job_scheduler != "spinach" %} rm -r {{cookiecutter.package_name}}/modules/spinach {% endif %}
 
-git init && git add . && git commit -m 'Initial commit. Bootstrap project'
+git init && git add .
