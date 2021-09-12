@@ -2,7 +2,6 @@ from typer import Typer
 
 from {{cookiecutter.package_name}}.modules.users import users_cli
 
-
 app = Typer()
 
 

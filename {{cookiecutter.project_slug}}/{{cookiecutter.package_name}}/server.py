@@ -2,19 +2,18 @@ from pathlib import Path
 
 import rtoml
 import uvicorn
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
 from {{cookiecutter.package_name}}.config import settings
+from {{cookiecutter.package_name}}.modules.meta.meta_module import MetaModule
+from {{cookiecutter.package_name}}.modules.users.users_module import UsersModule
 {% if cookiecutter.job_scheduler == "apscheduler" -%}
 from {{cookiecutter.package_name}}.modules.apscheduler.apscheduler_deps import get_scheduler
 {% elif cookiecutter.job_scheduler == "spinach" -%}
 from {{cookiecutter.package_name}}.modules.spinach.spinach_deps import get_spinach
 {%- endif %}
-from {{cookiecutter.package_name}}.modules.meta.meta_module import MetaModule
-from {{cookiecutter.package_name}}.modules.users.users_module import UsersModule
-
 
 pyproject = rtoml.load(Path(__file__).parent.joinpath("../pyproject.toml"))
 app = FastAPI(

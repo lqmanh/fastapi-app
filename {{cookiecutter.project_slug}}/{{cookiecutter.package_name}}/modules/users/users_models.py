@@ -1,4 +1,4 @@
-from tortoise.fields import BooleanField, CharEnumField, CharField
+from tortoise.fields import CharEnumField, CharField
 
 from {{cookiecutter.package_name}}.common.types import TortoiseModel
 
@@ -9,6 +9,3 @@ class User(TortoiseModel):
     password_hash: str = CharField(255)
     role: Role = CharEnumField(Role, max_length=255)
     username: str = CharField(255, unique=True)
-
-    class Meta:
-        table = "users"

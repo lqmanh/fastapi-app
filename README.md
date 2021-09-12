@@ -22,27 +22,23 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 ## Project Structure
 
 ```sh
-{{cookiecutter.project_slug}}        # Project root
-├── {{cookiecutter.package_name}}    # Root module, containing all source code
+{{cookiecutter.project_slug}}        #
+├── {{cookiecutter.package_name}}    #
 │   ├── common                       # Common components
 │   │   ├── constants.py             # Constants
-│   │   ├── types.py                 # Types, enums,...
+│   │   ├── types.py                 # Classes, enums, type aliases,...
 │   │   └── utils.py                 # Helper functions, decorators,...
 │   ├── modules                      # Where magic happens
 │   │   ├── ac                       # Access control module
 │   │   │   ├── ac_deps.py           #
 │   │   │   ├── ac_model.conf        # Access control model
 │   │   │   └── ac_policies.csv      # Policies
-│   │   ├── apscheduler              # APScheduler module
-│   │   │   └── apscheduler_deps.py  #
 │   │   ├── logging                  # Logging module
 │   │   │   └── logging_deps.py      #
 │   │   ├── pagination               # Pagination module
 │   │   │   ├── pagination_deps.py   #
 │   │   │   ├── pagination_dtos.py   #
 │   │   │   └── pagination_types.py  #
-│   │   ├── spinach                  # Spinach module
-│   │   │   └── spinach_deps.py      #
 │   │   └── users                    # User management module
 │   │       ├── users_cli.py         # CLI sub-app
 │   │       ├── users_controller.py  # Controller in NestJS, class-based view in Django
@@ -52,13 +48,23 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   │       ├── users_models.py      # Domain models
 │   │       ├── users_module.py      # Module class
 │   │       ├── users_service.py     # Business logic, also a special kind of dependencies
-│   │       └── users_types.py       # Types, enums,...
+│   │       └── users_types.py       # Classes, enums, type aliases,...
 │   ├── cli.py                       # Root CLI app
 │   ├── config.py                    # Global configurations
 │   └── server.py                    # HTTP server
-├── LICENSE                          # License
-├── README.md                        # You know what it is ;)
+├── LICENSE                          #
+├── README.md                        #
 ├── aerich.ini                       # Aerich configurations
-├── poetry.toml                      # Project-level Poetry configurations
-└── pyproject.toml                   # Project meta
+├── poetry.toml                      #
+└── pyproject.toml                   #
+```
+
+### Optional Modules
+
+```sh
+modules                      #
+├── apscheduler              # APScheduler module
+│   └── apscheduler_deps.py  #
+└── spinach                  # Spinach module
+    └── spinach_deps.py      #
 ```

@@ -19,7 +19,7 @@ class MetaController:
             "message": "PONG",
             "environment": settings.python_env,
             "root_path": req.scope.get("root_path"),
-            "build_revision": pyproject["tool"]["poetry"]["version"],
+            "version": pyproject["tool"]["poetry"]["version"],
         }
 
     @router.get("/config")
