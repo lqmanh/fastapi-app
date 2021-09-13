@@ -15,4 +15,5 @@ class TortoiseModel(Model):
 
 
 class PydanticModel(BaseModel):
-    ...
+    class Config:
+        orm_mode = True

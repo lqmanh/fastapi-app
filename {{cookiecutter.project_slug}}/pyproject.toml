@@ -16,6 +16,9 @@ python = "^3.9"
 [tool.black]
 line-length = 90
 
+[tool.mypy]
+plugins = "pydantic.mypy"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

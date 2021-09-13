@@ -27,7 +27,7 @@ class UsersController:
     users_service: UsersService = Depends()
     users_mapper: UsersMapper = Depends()
 
-    @router.post("/sign-up")
+    @router.post("/sign-up", status_code=201)
     async def sign_up(self, input_: SignUpInput) -> UserRead:
         user = await self.users_service.sign_up(input_)
         return self.users_mapper.to_user_read(user)
@@ -41,7 +41,7 @@ class UsersController:
 
     @router.post("/", status_code=201)
     async def create_user(
-        self, user_create: UserCreate, _: User = Depends(get_authorized_user)
+        self, user_create: UserCreate, me: User = Depends(get_authorized_user)
     ) -> UserRead:
         user = await self.users_service.create_user(user_create)
         return self.users_mapper.to_user_read(user)
