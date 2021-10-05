@@ -28,4 +28,4 @@ def get_authorized_user(
     act = req.method
     if enforcer.enforce(sub, obj, act):
         return me
-    raise HTTPException(status_code=403, detail="Forbidden")
+    raise HTTPException(status_code=403)

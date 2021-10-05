@@ -36,6 +36,7 @@ class Settings(BaseSettings):
                     "models": self.tortoise_orm_model_modules,
                 }
             },
+            "use_tz": True,
         }
 
     @property

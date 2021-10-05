@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any, Union
 
 from fastapi import HTTPException
@@ -28,7 +28,7 @@ class UsersService:
         payload: dict[str, Any] = {"sub": sub}
         exp = settings.jwt_exp_seconds
         if exp > 0:
-            payload["exp"] = datetime.utcnow() + timedelta(seconds=exp)
+            payload["exp"] = datetime.now(timezone.utc) + timedelta(seconds=exp)
         access_token = jwt.encode(
             payload, settings.jwt_secret, algorithm=ALGORITHMS.HS256
         )
@@ -42,7 +42,7 @@ class UsersService:
             sub = payload["sub"]
             return sub
         except (JWTError, KeyError):
-            raise HTTPException(status_code=401, detail="Cannot validate credentials")
+            raise HTTPException(status_code=401)
 
     async def sign_up(self, input_: SignUpInput) -> User:
         user_create = UserCreate(
@@ -54,8 +54,10 @@ class UsersService:
     async def sign_in(self, form_data: OAuth2PasswordRequestForm) -> str:
         user = await User.get_or_none(username=form_data.username)
 
-        if not user or not self._verify_password(form_data.password, user.password_hash):
-            raise HTTPException(status_code=401, detail="Incorrect username or password")
+        if not user:
+            raise HTTPException(status_code=404)
+        if not self._verify_password(form_data.password, user.password_hash):
+            raise HTTPException(status_code=401)
 
         return self._encode_access_token(user.username)
 
@@ -96,7 +98,7 @@ class UsersService:
 
         current_password = password_update.current_password
         if not self._verify_password(current_password, user.password_hash):
-            raise HTTPException(status_code=401, detail="Incorrect password")
+            raise HTTPException(status_code=401)
 
         new_password = password_update.new_password
         user.password_hash = self._hash_password(new_password)
