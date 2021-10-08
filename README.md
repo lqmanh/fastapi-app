@@ -33,6 +33,9 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 │   │   │   ├── ac_deps.py           #
 │   │   │   ├── ac_model.conf        # Access control model
 │   │   │   └── ac_policies.csv      # Policies
+│   │   ├── arq                      # Arq module
+│   │   │   ├── arq_deps.py          #
+│   │   │   └── arq_jobs.py          #
 │   │   ├── logging                  # Logging module
 │   │   │   └── logging_deps.py      #
 │   │   ├── pagination               # Pagination module
@@ -57,14 +60,4 @@ cookiecutter https://github.com/lqmanh/fastapi-app
 ├── aerich.ini                       # Aerich configurations
 ├── poetry.toml                      #
 └── pyproject.toml                   #
-```
-
-### Optional Modules
-
-```sh
-modules                      #
-├── apscheduler              # APScheduler module
-│   └── apscheduler_deps.py  #
-└── spinach                  # Spinach module
-    └── spinach_deps.py      #
 ```

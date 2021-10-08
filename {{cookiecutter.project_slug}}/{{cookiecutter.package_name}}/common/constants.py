@@ -12,7 +12,7 @@ def serialize_dt(v) -> str:
 
 #
 # Because the default JSON encoder/decoder does not support `date`s and `datetime`s,
-# you may want to use these ones with `JSONField`s
+# you may want to use these ones with `JSONField`s.
 #
 TORTOISE_JSON_DUMPS = partial(JSON_DUMPS, default=serialize_dt)
 TORTOISE_JSON_LOADS = JSON_LOADS

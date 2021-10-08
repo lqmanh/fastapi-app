@@ -43,6 +43,12 @@ or
 $ poetry run python {{cookiecutter.package_name}}/cli.py
 ```
 
+#### Run worker
+
+```sh
+$ poetry run python {{cookiecutter.package_name}}/worker.py
+```
+
 ### API documentation
 
 #### Web app

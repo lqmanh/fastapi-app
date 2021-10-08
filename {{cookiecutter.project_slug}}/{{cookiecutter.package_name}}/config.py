@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     root_path: str = ""
 
     database_uri: str
+    redis_dsn: str
 
     jwt_secret: str
     jwt_exp_seconds: int = -1  # no EXP

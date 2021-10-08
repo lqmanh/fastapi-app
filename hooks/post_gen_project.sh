@@ -5,7 +5,7 @@ poetry add \
     uvicorn[standard] \
     fastapi \
     pydantic[dotenv] \
-    git+https://github.com/lqmanh/fastapi-module.git#8955a06 \
+    git+https://github.com/lqmanh/fastapi-module.git#ceb8c3d \
     python-multipart \
     python-jose[cryptography] \
     passlib[bcrypt]
@@ -23,7 +23,7 @@ poetry add \
 poetry add \
     rtoml \
     casbin \
-    {% if cookiecutter.job_scheduler %} {{cookiecutter.job_scheduler}} {% endif %}
+    arq
 
 # Install dev dependencies
 poetry add --dev \
@@ -33,7 +33,5 @@ poetry add --dev \
     black
 
 # Remove unused modules
-{% if cookiecutter.job_scheduler != "apscheduler" %} rm -r {{cookiecutter.package_name}}/modules/apscheduler {% endif %}
-{% if cookiecutter.job_scheduler != "spinach" %} rm -r {{cookiecutter.package_name}}/modules/spinach {% endif %}
 
 git init && git add .

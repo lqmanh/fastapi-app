@@ -13,6 +13,5 @@
 
   "database_driver": [null, "asyncpg", "aiomysql", "asyncmy"],
   "database_uri": "sqlite://db.sqlite3",
-
-  "job_scheduler": [null, "apscheduler", "spinach"]
+  "redis_dsn": "redis://localhost"
 }
