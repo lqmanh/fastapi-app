@@ -8,7 +8,7 @@ Fastapi-app is an opinionated modular FastAPI app boilerplate inspired by [NestJ
 - Active record ORM with [Tortoise](https://github.com/tortoise/tortoise-orm) and database migration with [Aerich](https://github.com/tortoise/aerich)
 - Authentication with OAuth2
 - Access control with [Casbin](https://github.com/casbin/pycasbin)
-- Job scheduling with [APScheduler](https://github.com/agronholm/apscheduler) or [Spinach](https://github.com/NicolasLM/spinach)
+- Job scheduling with [Arq](https://github.com/samuelcolvin/arq)
 - CLI with [Typer](https://github.com/tiangolo/typer)
 - Built-in pagination support
 - Preconfigured logger
